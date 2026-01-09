@@ -41,17 +41,17 @@
 		"waiting-rooms"
 	],
 	"license": "MIT",
-	"homepage": "https://github.com/automations-project/n8n-nodes-cloudflare",
+	"homepage": "https://github.com/Automations-Project/n8n-nodes-cloudflare",
 	"author": {
 		"name": "nskha",
 		"email": "github-public@admins.mozmail.com"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/automations-project/n8n-nodes-cloudflare.git"
+		"url": "https://github.com/Automations-Project/n8n-nodes-cloudflare"
 	},
 	"bugs": {
-		"url": "https://github.com/automations-project/n8n-nodes-cloudflare/issues"
+		"url": "https://github.com/Automations-Project/n8n-nodes-cloudflare/issues"
 	},
 	"publishConfig": {
 		"access": "public"
