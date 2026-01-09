@@ -69,12 +69,24 @@
 		"lintfix": "eslint nodes credentials package.json --fix",
 		"test": "jest",
 		"test:watch": "jest --watch",
-		"test:coverage": "jest --coverage",
+		"test:coverage": "jest --coverage --passWithNoTests",
 		"test:nodes": "jest --testPathPattern=nodes",
 		"update:banner": "node scripts/update-banner.js",
 		"prepublishOnly": "npm run build && eslint -c .eslintrc.prepublish.js nodes credentials package.json",
 		"prepare": "npm run build",
 		"prepack": "npm run build"
+	},
+	"jest": {
+		"testPathIgnorePatterns": [
+			"/node_modules/",
+			"/dist/"
+		],
+		"modulePathIgnorePatterns": [
+			"<rootDir>/dist/"
+		],
+		"watchPathIgnorePatterns": [
+			"<rootDir>/dist/"
+		]
 	},
 	"files": [
 		"dist"
