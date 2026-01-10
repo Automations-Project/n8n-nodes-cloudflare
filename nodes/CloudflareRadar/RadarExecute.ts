@@ -1,10 +1,7 @@
 import { IDataObject, IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { cloudflareApiRequest } from '../shared/GenericFunctions';
 
-export async function radarExecute(
-	this: IExecuteFunctions,
-	index: number,
-): Promise<INodeExecutionData[]> {
+export async function radarExecute(this: IExecuteFunctions, index: number): Promise<INodeExecutionData[]> {
 	const resource = this.getNodeParameter('resource', index) as string;
 	const operation = this.getNodeParameter('operation', index) as string;
 	const dateRange = this.getNodeParameter('dateRange', index, '7d') as string;
@@ -14,7 +11,7 @@ export async function radarExecute(
 	// HTTP Resource
 	if (resource === 'http') {
 		if (operation === 'getSummary') {
-			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/http/summary', {}, qs);
+			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/http/summary/bot_class', {}, qs);
 			return [{ json: response as IDataObject }];
 		}
 		if (operation === 'getTimeseries') {
@@ -38,7 +35,7 @@ export async function radarExecute(
 	// BGP Resource
 	if (resource === 'bgp') {
 		if (operation === 'getRoutes') {
-			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/bgp/routes', {}, qs);
+			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/bgp/routes/stats', {}, qs);
 			return [{ json: response as IDataObject }];
 		}
 		if (operation === 'getTimeseries') {
@@ -54,7 +51,7 @@ export async function radarExecute(
 		if (operation === 'getTopPrefixes') {
 			const limit = this.getNodeParameter('limit', index, 10) as number;
 			qs.limit = limit;
-			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/bgp/top/prefixes', {}, qs);
+			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/bgp/top', {}, qs);
 			return [{ json: response as IDataObject }];
 		}
 	}
@@ -70,7 +67,7 @@ export async function radarExecute(
 		if (operation === 'getTopDomains') {
 			const limit = this.getNodeParameter('limit', index, 10) as number;
 			qs.limit = limit;
-			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/dns/top/domains', {}, qs);
+			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/ranking/top', {}, qs);
 			return [{ json: response as IDataObject }];
 		}
 		if (operation === 'getTimeseries') {
@@ -92,13 +89,19 @@ export async function radarExecute(
 		if (operation === 'getTopVectors') {
 			const limit = this.getNodeParameter('limit', index, 10) as number;
 			qs.limit = limit;
-			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/attacks/layer3/top/attacks', {}, qs);
+			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/attacks/layer3/top', {}, qs);
 			return [{ json: response as IDataObject }];
 		}
 		if (operation === 'getTopIndustries') {
 			const limit = this.getNodeParameter('limit', index, 10) as number;
 			qs.limit = limit;
-			const response = await cloudflareApiRequest.call(this, 'GET', '/radar/attacks/layer7/top/industries', {}, qs);
+			const response = await cloudflareApiRequest.call(
+				this,
+				'GET',
+				'/radar/attacks/layer7',
+				{},
+				{ ...qs, dimension: 'industry', limit },
+			);
 			return [{ json: response as IDataObject }];
 		}
 	}

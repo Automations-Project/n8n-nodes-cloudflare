@@ -13,7 +13,7 @@ export async function radarAiExecute(
 		const response = await cloudflareApiRequest.call(
 			this,
 			'GET',
-			'/radar/ai/summary',
+			'/radar/ai/bots/summary/user_agent',
 			{},
 			{ dateRange },
 		);
@@ -36,7 +36,7 @@ export async function radarBotsExecute(
 	}
 	if (operation === 'getTop') {
 		const limit = this.getNodeParameter('botsLimit', index) as number;
-		const response = await cloudflareApiRequest.call(this, 'GET', '/radar/http/top/bot_class', {}, { limit });
+		const response = await cloudflareApiRequest.call(this, 'GET', '/radar/http/ases/bot_class', {}, { limit });
 		return [{ json: response as IDataObject }];
 	}
 
@@ -51,7 +51,7 @@ export async function radarNetflowsExecute(
 	const operation = this.getNodeParameter('operation', index) as string;
 
 	if (operation === 'getSummary') {
-		const response = await cloudflareApiRequest.call(this, 'GET', '/radar/netflows/summary');
+		const response = await cloudflareApiRequest.call(this, 'GET', '/radar/netflows/summary/protocol');
 		return [{ json: response as IDataObject }];
 	}
 	if (operation === 'getTop') {

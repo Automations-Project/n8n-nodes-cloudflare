@@ -19,14 +19,9 @@ export async function cniExecute(
 		return [{ json: response as IDataObject }];
 	}
 
-	if (operation === 'updateInterconnect') {
-		const interconnectId = this.getNodeParameter('interconnectId', index) as string;
-		const description = this.getNodeParameter('description', index, '') as string;
-		const body: IDataObject = {};
-		if (description) body.description = description;
-		const response = await cloudflareApiRequest.call(this, 'PUT', `/accounts/${accountId}/cni/interconnects/${interconnectId}`, body);
-		return [{ json: response as IDataObject }];
-	}
+
+	// NOTE: Update operation (PUT) is not available in the Cloudflare API for interconnects.
+	// Only create (POST), list (GET), get (GET), and delete (DELETE) are supported.
 
 	return [];
 }

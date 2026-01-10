@@ -11,31 +11,22 @@ export const securityCenterOperations: INodeProperties[] = [
 		options: [
 			{ name: 'Get', value: 'get', description: 'Get security insights', action: 'Get insights' },
 			{ name: 'Get Many', value: 'getMany', description: 'List security insights', action: 'List insights' },
+			{ name: 'Dismiss', value: 'dismiss', description: 'Dismiss an insight', action: 'Dismiss insight' },
 		],
 		default: 'getMany',
 	},
-	{
-		displayName: 'Operation',
-		name: 'operation',
-		type: 'options',
-		noDataExpression: true,
-		displayOptions: { show: { resource: ['issue'] } },
-		options: [
-			{ name: 'Get Many', value: 'getMany', description: 'List security issues', action: 'List issues' },
-			{ name: 'Dismiss', value: 'dismiss', description: 'Dismiss an issue', action: 'Dismiss issue' },
-		],
-		default: 'getMany',
-	},
+	// NOTE: The "issue" resource was removed as it does not exist in the Cloudflare API.
+	// The dismiss operation is available under insights as per the API spec.
 ];
 
 export const securityCenterFields: INodeProperties[] = [
-	{ ...accountIdField, displayOptions: { show: { resource: ['insight', 'issue'] } } },
+	{ ...accountIdField, displayOptions: { show: { resource: ['insight'] } } },
 	{
-		displayName: 'Issue ID',
-		name: 'issueId',
+		displayName: 'Insight ID',
+		name: 'insightId',
 		type: 'string',
 		required: true,
 		default: '',
-		displayOptions: { show: { resource: ['issue'], operation: ['dismiss'] } },
+		displayOptions: { show: { resource: ['insight'], operation: ['dismiss'] } },
 	},
 ];

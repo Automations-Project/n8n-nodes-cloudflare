@@ -9,7 +9,8 @@ export async function cloudforceOneExecute(
 	const accountId = this.getNodeParameter('accountId', index) as string;
 
 	if (operation === 'listRequests') {
-		const response = await cloudflareApiRequestAllItems.call(this, 'GET', `/accounts/${accountId}/cloudforce-one/requests/priority`);
+		// API uses POST for listing requests with filter body
+		const response = await cloudflareApiRequestAllItems.call(this, 'POST', `/accounts/${accountId}/cloudforce-one/requests`, {});
 		return this.helpers.returnJsonArray(response as IDataObject[]);
 	}
 

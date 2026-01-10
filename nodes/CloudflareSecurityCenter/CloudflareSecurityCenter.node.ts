@@ -18,7 +18,7 @@ export class CloudflareSecurityCenter implements INodeType {
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Manage Cloudflare Security Center (insights, issues)',
+		description: 'Manage Cloudflare Security Center insights',
 		defaults: { name: 'Cloudflare Security Center' },
 		inputs: ['main'],
 		outputs: ['main'],
@@ -35,7 +35,7 @@ export class CloudflareSecurityCenter implements INodeType {
 				noDataExpression: true,
 				options: [
 					{ name: 'Insight', value: 'insight' },
-					{ name: 'Issue', value: 'issue' },
+					// NOTE: Issue resource removed - not in Cloudflare API
 				],
 				default: 'insight',
 			},
@@ -54,7 +54,7 @@ export class CloudflareSecurityCenter implements INodeType {
 		for (let i = 0; i < items.length; i++) {
 			try {
 				let result: INodeExecutionData[];
-				if (resource === 'insight' || resource === 'issue') {
+				if (resource === 'insight') {
 					result = await securityCenterExecute.call(this, i);
 				} else {
 					throw new NodeOperationError(this.getNode(), `Unknown resource: ${resource}`, { itemIndex: i });

@@ -11,7 +11,7 @@ export const cniOperations: INodeProperties[] = [
 		options: [
 			{ name: 'Get Many Interconnects', value: 'listInterconnects', description: 'List CNI interconnects', action: 'List interconnects' },
 			{ name: 'Get Interconnect', value: 'getInterconnect', description: 'Get a CNI interconnect', action: 'Get interconnect' },
-			{ name: 'Update Interconnect', value: 'updateInterconnect', description: 'Update a CNI interconnect', action: 'Update interconnect' },
+			// NOTE: Update operation is not available in the Cloudflare API for interconnects
 		],
 		default: 'listInterconnects',
 	},
@@ -25,13 +25,6 @@ export const cniFields: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		displayOptions: { show: { resource: ['cni'], operation: ['getInterconnect', 'updateInterconnect'] } },
-	},
-	{
-		displayName: 'Description',
-		name: 'description',
-		type: 'string',
-		default: '',
-		displayOptions: { show: { resource: ['cni'], operation: ['updateInterconnect'] } },
+		displayOptions: { show: { resource: ['cni'], operation: ['getInterconnect'] } },
 	},
 ];

@@ -1,109 +1,81 @@
-# Dependencies
+# -----------------------------------------------------------------------------
+# REVERSED GITIGNORE (Allowlist)
+# Usage: Ignore everything by default, then explicitly allow files/directories.
+# -----------------------------------------------------------------------------
+
+# 1. Ignore everything in the root directory
+/*
+
+# 2. General Exclusions (Apply even inside allowed directories)
+#    These safeguard against tracking junk files if they appear in allowed folders.
 node_modules/
-package-lock.json
-# pnpm-lock.yaml
-yarn.lock
-
-# Build outputs
 dist/
-*.tsbuildinfo
-scripts/*
-!scripts/update-banner.js
-!scripts/banner.config
-.agent
-.windsurf
-#.github
-duplicate-report.json
-ecosystem.config.js
-docs
-.github\README.md
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-nodes/NodemationInternal/reserach
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
+coverage/
+.nyc_output/
+.tmp
+tmp/
+*.tmp
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 hs_err_pid*.log
-
-# Temp files
-.tmp
-tmp/
-*.tmp
-
-# Environment
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+*.tsbuildinfo
 .env
 .env.local
 .env.*.local
 .npmrc
-
-# Testing
-coverage/
-.nyc_output/
-
-# Local documentation and development files
-.docs/
-.dev/
-Research/
-
-# Development scripts
-fix_*.ps1
-test-pg-connection.js
-#intro.png
-
-# Windsurf/Cascade AI
+.idea/
+.vscode/
 .windsurf/
 .junie/
-
-# n8n docs (local reference)
 .n8n-docs/
-
-# Publishing
 .PublishKey
 
-# GitHub Actions (optional, comment out if using)
-# .github/
+# -----------------------------------------------------------------------------
+# 3. ALLOWLIST - Files and Directories to Keep
+# -----------------------------------------------------------------------------
 
-# SQL scripts (local testing)
-# SQL scripts (local testing)
-*.sql
-!scripts/cleanup_script.sql
+# Configuration Files
+!/.editorconfig
+!/.eslintrc.js
+!/.eslintrc.prepublish.js
+!/.gitignore
+!/.npmignore
+!/.prettierrc.js
+!/tsconfig.json
+!/tslint.json
 
-# Markdown reports (keep only standard ones: README, CHANGELOG, LICENSE, CODE_OF_CONDUCT)
-*_VERIFICATION_*.md
-*_FIX_*.md
-*_AUDIT_*.md
-*_SUMMARY*.md
-*_REPORT.md
-TASK_*.md
-AGG*.md
-FINAL_*.md
-PRODUCTION_*.md
-SAFE_*.md
-SECURITY_*.md
-SUCCESS_*.md
-SYNC_*.md
-UI_*.md
-README_TEMPLATE.md
-GenericFunctions.ts.backup
-docs/issues/logs.txt
-api.md
-audit-final.txt
-audit-full-output.txt
-gap_analysis.md
-sdk-coverage-report.json
-sdk-gap-report.json
-service-audit-v2.json
-service-node-report.json
-test-require.js
+# Documentation
+!/CHANGELOG.md
+!/CODE_OF_CONDUCT.md
+!/LICENSE
+!/README.md
+!/intro.png
+
+# Project Source & Dependencies
+!/gulpfile.js
+!/index.js
+!/package.json
+!/pnpm-lock.yaml
+
+# Core Directories
+!/credentials/
+!/nodes/
+!/.github/
+
+# Scripts (Selective)
+!/scripts/
+# Re-ignore everything inside scripts to only allow specific ones
+/scripts/*
+!/scripts/update-banner.js
+!/scripts/banner.config
+!/scripts/setup-dev-windows.js
+!/scripts/start-dev.mjs
+!/scripts/watch-n8n.js
