@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-cloudflare",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "n8n community nodes for Cloudflare - DNS, Workers, R2, KV, D1, Pages, AI, Zero Trust and more",
 	"keywords": [
 		"n8n-community-node-package",
