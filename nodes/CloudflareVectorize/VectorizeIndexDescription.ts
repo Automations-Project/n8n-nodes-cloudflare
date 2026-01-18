@@ -103,7 +103,11 @@ export const vectorizeIndexFields: INodeProperties[] = [
 		type: 'number',
 		required: true,
 		default: 1536,
-		description: 'Number of dimensions for vectors (e.g., 1536 for OpenAI embeddings)',
+		typeOptions: {
+			minValue: 40,
+			maxValue: 1536,
+		},
+		description: 'Number of dimensions for vectors (min: 40, max: 1536). Common values: 384, 768, 1024, 1536 for OpenAI/embedding models.',
 		displayOptions: {
 			show: {
 				resource: ['index'],

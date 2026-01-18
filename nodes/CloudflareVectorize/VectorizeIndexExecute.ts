@@ -21,7 +21,7 @@ export async function vectorizeIndexExecute(
 			responseData = await cloudflareApiRequestAllItems.call(
 				this,
 				'GET',
-				`/accounts/${accountId}/vectorize/indexes`,
+				`/accounts/${accountId}/vectorize/v2/indexes`,
 			);
 		} else {
 			const limit = this.getNodeParameter('limit', itemIndex) as number;
@@ -29,7 +29,7 @@ export async function vectorizeIndexExecute(
 			responseData = await cloudflareApiRequest.call(
 				this,
 				'GET',
-				`/accounts/${accountId}/vectorize/indexes`,
+				`/accounts/${accountId}/vectorize/v2/indexes`,
 				{},
 				qs,
 			);
@@ -42,7 +42,7 @@ export async function vectorizeIndexExecute(
 		responseData = await cloudflareApiRequest.call(
 			this,
 			'GET',
-			`/accounts/${accountId}/vectorize/indexes/${indexName}`,
+			`/accounts/${accountId}/vectorize/v2/indexes/${indexName}`,
 		);
 	}
 
@@ -69,7 +69,7 @@ export async function vectorizeIndexExecute(
 		responseData = await cloudflareApiRequest.call(
 			this,
 			'POST',
-			`/accounts/${accountId}/vectorize/indexes`,
+			`/accounts/${accountId}/vectorize/v2/indexes`,
 			body,
 		);
 	}
@@ -80,7 +80,7 @@ export async function vectorizeIndexExecute(
 		await cloudflareApiRequest.call(
 			this,
 			'DELETE',
-			`/accounts/${accountId}/vectorize/indexes/${indexName}`,
+			`/accounts/${accountId}/vectorize/v2/indexes/${indexName}`,
 		);
 
 		responseData = { success: true, deleted: indexName };

@@ -133,12 +133,28 @@ jobs:
         if: hashFiles('scripts/update-banner.js') != ''
         run: |
           echo "Generating banner image..."
-          npm run update:banner || echo "⚠️ Banner generation failed (non-critical)"
-
-          if [ -f "intro.png" ]; then
-            echo "✅ Banner image generated"
+          
+          # Check if required secrets are available
+          if [ -z "$BANNER_API_BASE_URL" ] || [ -z "$BANNER_API_KEY" ]; then
+            echo "⚠️ BANNER_API_BASE_URL or BANNER_API_KEY not configured"
+            echo "⚠️ Skipping banner generation - please configure secrets"
+            exit 0
+          fi
+          
+          # Run banner generation
+          if npm run update:banner; then
+            echo "✅ Banner generation command completed"
           else
-            echo "⚠️ intro.png not found after generation"
+            echo "❌ Banner generation failed"
+            exit 1
+          fi
+
+          # Verify the file was created/updated
+          if [ -f "intro.png" ]; then
+            echo "✅ intro.png exists ($(stat -c%s intro.png 2>/dev/null || stat -f%z intro.png) bytes)"
+          else
+            echo "❌ intro.png not found after generation"
+            exit 1
           fi
         env:
           BANNER_API_BASE_URL: ${{ secrets.BANNER_API_BASE_URL }}

@@ -78,23 +78,36 @@ R2 Storage, D1 Database, Pages, Stream, Images, Queues, Load Balancer, Registrar
 
 ## 🚀 Quick Start
 
-### Example: Update DNS Record
+### Example: Get All DNS Records With filter (Only Proxied - AKA: CF Orange)
 
 ```json
 {
-	"nodes": [
-		{
-			"name": "Cloudflare DNS",
-			"type": "n8n-nodes-cloudflare.cloudflareDns",
-			"parameters": {
-				"resource": "dnsRecord",
-				"operation": "update",
-				"zoneId": "{{ $json.zoneId }}",
-				"recordId": "{{ $json.recordId }}",
-				"content": "1.2.3.4"
-			}
-		}
-	]
+  "nodes": [
+    {
+      "parameters": {
+        "zoneId": "2454f994f1057a933cf06857ea485578",
+        "returnAll": true,
+        "filters": {
+          "proxied": true
+        }
+      },
+      "type": "CUSTOM.cloudflareDns",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "ba613500-5af9-4a88-8334-1230e875c060",
+      "name": "Get many DNS records",
+      "credentials": {
+        "cloudflareApi": {
+          "id": "46t5YxHZ7Xygke2Z",
+          "name": "Cloudflare account"
+        }
+      }
+    }
+  ],
+  "connections": {}
 }
 ```
 
@@ -108,6 +121,14 @@ All nodes feature dynamic dropdowns that load data from your Cloudflare account:
 - **R2 Buckets** - Select storage buckets
 - **KV Namespaces** - Choose key-value stores
 - **And more...**
+
+## ⚠️ Installation Notes
+
+n8n requires that all installed nodes have unique internal names. If you have other community node packages installed that register a node with the same name as a node in this package, n8n may throw an installation error.
+
+If you hit this, uninstall the conflicting package and restart n8n.
+
+Example report: https://github.com/Automations-Project/n8n-nodes-cloudflare/issues/2
 
 ## 📋 Requirements
 

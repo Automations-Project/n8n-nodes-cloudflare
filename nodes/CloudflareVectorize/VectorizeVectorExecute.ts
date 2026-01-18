@@ -2,8 +2,9 @@ import {
 	IExecuteFunctions,
 	INodeExecutionData,
 	IDataObject,
+	NodeOperationError,
 } from 'n8n-workflow';
-import { cloudflareApiRequest } from '../shared/GenericFunctions';
+import { cloudflareApiRequest, cloudflareApiRequestNdjson } from '../shared/GenericFunctions';
 
 export async function vectorizeVectorExecute(
 	this: IExecuteFunctions,
@@ -55,30 +56,46 @@ export async function vectorizeVectorExecute(
 		responseData = await cloudflareApiRequest.call(
 			this,
 			'POST',
-			`/accounts/${accountId}/vectorize/indexes/${indexName}/query`,
+			`/accounts/${accountId}/vectorize/v2/indexes/${indexName}/query`,
 			body,
 		);
 	}
 
 	if (operation === 'upsert') {
-		const vectorsStr = this.getNodeParameter('vectors', itemIndex) as string;
+		const vectorsInput = this.getNodeParameter('vectors', itemIndex) as string | IDataObject[];
 
+		// Parse vectors - accept both string (JSON) and array input
 		let vectors: IDataObject[];
-		try {
-			vectors = JSON.parse(vectorsStr);
-		} catch {
-			throw new Error('Vectors must be a valid JSON array');
+		if (typeof vectorsInput === 'string') {
+			try {
+				vectors = JSON.parse(vectorsInput);
+			} catch {
+				throw new NodeOperationError(
+					this.getNode(),
+					'Vectors must be a valid JSON array of vector objects',
+					{ itemIndex },
+				);
+			}
+		} else {
+			vectors = vectorsInput;
 		}
 
-		const body: IDataObject = {
-			vectors,
-		};
+		// Validate that vectors is an array
+		if (!Array.isArray(vectors)) {
+			throw new NodeOperationError(
+				this.getNode(),
+				'Vectors must be an array of vector objects with id, values, and optional metadata',
+				{ itemIndex },
+			);
+		}
 
-		responseData = await cloudflareApiRequest.call(
+		// Use NDJSON request helper for upsert (Cloudflare requires application/x-ndjson)
+		responseData = await cloudflareApiRequestNdjson.call(
 			this,
 			'POST',
-			`/accounts/${accountId}/vectorize/indexes/${indexName}/upsert`,
-			body,
+			`/accounts/${accountId}/vectorize/v2/indexes/${indexName}/upsert`,
+			vectors,
+			itemIndex,
 		);
 	}
 
@@ -93,7 +110,7 @@ export async function vectorizeVectorExecute(
 		responseData = await cloudflareApiRequest.call(
 			this,
 			'POST',
-			`/accounts/${accountId}/vectorize/indexes/${indexName}/get-by-ids`,
+			`/accounts/${accountId}/vectorize/v2/indexes/${indexName}/get-by-ids`,
 			body,
 		);
 	}
@@ -109,7 +126,7 @@ export async function vectorizeVectorExecute(
 		responseData = await cloudflareApiRequest.call(
 			this,
 			'POST',
-			`/accounts/${accountId}/vectorize/indexes/${indexName}/delete-by-ids`,
+			`/accounts/${accountId}/vectorize/v2/indexes/${indexName}/delete-by-ids`,
 			body,
 		);
 	}

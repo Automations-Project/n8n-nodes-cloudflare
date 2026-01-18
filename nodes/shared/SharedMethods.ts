@@ -112,7 +112,7 @@ export async function getR2Buckets(this: ILoadOptionsFunctions): Promise<INodePr
 export async function getVectorizeIndexes(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 	const accountId = this.getNodeParameter('accountId', 0) as string;
 	if (!accountId) return [];
-	const response = await cloudflareApiRequest.call(this, 'GET', `/accounts/${accountId}/vectorize/indexes`);
+	const response = await cloudflareApiRequest.call(this, 'GET', `/accounts/${accountId}/vectorize/v2/indexes`);
 	const indexes = response as unknown as IDataObject[];
 
 	if (!Array.isArray(indexes)) return [];

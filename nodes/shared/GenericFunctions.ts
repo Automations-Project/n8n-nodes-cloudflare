@@ -151,14 +151,165 @@ export async function cloudflareApiRequest(
 
 		return response.result as IDataObject;
 	} catch (error) {
-		// Enhanced error handling for common plan-related HTTP errors
-		const err = error as { statusCode?: number; message?: string };
+		// Extract detailed error info from HTTP errors
+		// n8n wraps HTTP errors with various structures depending on the error type
+		const err = error as {
+			statusCode?: number;
+			message?: string;
+			cause?: {
+				error?: { errors?: Array<{ message?: string; code?: number }> };
+				response?: { body?: unknown };
+			};
+			response?: { body?: string | { errors?: Array<{ message?: string; code?: number }> } };
+			httpCode?: string;
+			description?: string;
+			error?: { errors?: Array<{ message?: string; code?: number }> };
+		};
+
+		// Try to extract Cloudflare error details from various error structures
+		// n8n can wrap errors in different ways depending on the HTTP client used
+		let cfErrors: Array<{ message?: string; code?: number }> | undefined;
+
+		// Check direct error.error.errors (common in n8n HTTP responses)
+		if (err.error?.errors) {
+			cfErrors = err.error.errors;
+		}
+		// Check cause.error.errors
+		else if (err.cause?.error?.errors) {
+			cfErrors = err.cause.error.errors;
+		}
+		// Check cause.response.body (axios-style)
+		else if (err.cause?.response?.body) {
+			const body = err.cause.response.body;
+			if (typeof body === 'object' && body !== null && 'errors' in body) {
+				cfErrors = (body as { errors: Array<{ message?: string; code?: number }> }).errors;
+			}
+		}
+		// Check response.body object
+		else if (err.response?.body && typeof err.response.body === 'object') {
+			cfErrors = err.response.body.errors;
+		}
+		// Check response.body string (needs parsing)
+		else if (err.response?.body && typeof err.response.body === 'string') {
+			try {
+				const parsed = JSON.parse(err.response.body);
+				cfErrors = parsed.errors;
+			} catch {
+				// Ignore parse errors
+			}
+		}
+
+		const cfErrorMessage = cfErrors?.[0]?.message;
+		const cfErrorCode = cfErrors?.[0]?.code;
+		const httpCode = err.httpCode || (err.statusCode ? String(err.statusCode) : undefined);
+
+		// Build descriptive error message
+		const allErrors = cfErrors?.map(e => e.message).filter(Boolean).join('; ');
+
 		if (err.statusCode === 403) {
 			throw new NodeApiError(this.getNode(), error as JsonObject, {
-				message: `Access denied. This feature may require a higher Cloudflare plan or additional permissions.`,
+				message: cfErrorMessage || 'Access denied',
+				description: 'This feature may require a higher Cloudflare plan or additional permissions.',
+				httpCode,
 			});
 		}
-		throw new NodeApiError(this.getNode(), error as JsonObject);
+
+		if (cfErrorMessage) {
+			throw new NodeApiError(this.getNode(), error as JsonObject, {
+				message: cfErrorMessage,
+				description: allErrors !== cfErrorMessage ? allErrors : (cfErrorCode ? `Error code: ${cfErrorCode}` : undefined),
+				httpCode,
+			});
+		}
+
+		throw new NodeApiError(this.getNode(), error as JsonObject, {
+			message: err.message || 'Cloudflare API request failed',
+			httpCode,
+		});
+	}
+}
+
+/**
+ * Make an API request to Cloudflare with NDJSON body format
+ * Used for Vectorize insert/upsert operations that require application/x-ndjson
+ * Cloudflare expects multipart form-data with a 'body' field containing the NDJSON
+ */
+export async function cloudflareApiRequestNdjson(
+	this: IExecuteFunctions,
+	method: IHttpRequestMethods,
+	endpoint: string,
+	vectors: IDataObject[],
+	itemIndex: number,
+): Promise<IDataObject> {
+	// Convert vectors array to NDJSON format (newline-delimited JSON)
+	const ndjsonBody = vectors.map((v) => JSON.stringify(v)).join('\n') + '\n';
+
+	// Cloudflare Vectorize upsert/insert expects raw NDJSON body
+	const options: IHttpRequestOptions = {
+		method,
+		url: `https://api.cloudflare.com/client/v4${endpoint}`,
+		body: Buffer.from(ndjsonBody, 'utf-8'),
+		headers: {
+			'Content-Type': 'application/x-ndjson',
+		},
+		json: false,
+		returnFullResponse: false,
+	};
+
+	try {
+		const responseText = await this.helpers.httpRequestWithAuthentication.call(
+			this,
+			'cloudflareApi',
+			options,
+		);
+
+		// Parse JSON response
+		let response: IDataObject;
+		try {
+			response = typeof responseText === 'string' ? JSON.parse(responseText) : responseText;
+		} catch {
+			throw new NodeOperationError(
+				this.getNode(),
+				`Failed to parse Cloudflare response: ${responseText}`,
+				{ itemIndex },
+			);
+		}
+
+		if (response.success === false) {
+			const errors = response.errors as Array<{ message?: string; code?: number }> | undefined;
+			const errorMessage = errors?.[0]?.message || 'Unknown Vectorize error';
+			const errorCode = errors?.[0]?.code;
+			const allErrors = errors?.map(e => e.message).filter(Boolean).join('; ');
+
+			throw new NodeApiError(this.getNode(), response as JsonObject, {
+				message: errorMessage,
+				description: allErrors !== errorMessage ? allErrors : (errorCode ? `Error code: ${errorCode}` : undefined),
+				itemIndex,
+			});
+		}
+
+		return response.result as IDataObject;
+	} catch (error) {
+		if (error instanceof NodeApiError || error instanceof NodeOperationError) {
+			throw error;
+		}
+		// Extract error details from various structures
+		const err = error as {
+			response?: { data?: { errors?: Array<{ message?: string; code?: number }> } };
+			message?: string;
+			statusCode?: number;
+			error?: { errors?: Array<{ message?: string; code?: number }> };
+		};
+
+		// Try to extract Cloudflare error message
+		const cfErrors = err.error?.errors || err.response?.data?.errors;
+		const cfErrorMessage = cfErrors?.[0]?.message;
+
+		throw new NodeApiError(this.getNode(), error as JsonObject, {
+			message: cfErrorMessage || err.message || 'Vectorize request failed',
+			httpCode: err.statusCode ? String(err.statusCode) : undefined,
+			itemIndex,
+		});
 	}
 }
 
