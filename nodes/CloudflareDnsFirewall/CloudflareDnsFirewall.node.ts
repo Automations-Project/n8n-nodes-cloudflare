@@ -24,6 +24,7 @@ export class CloudflareDnsFirewall implements INodeType {
 			name: 'Cloudflare DNS Firewall',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

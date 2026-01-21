@@ -22,6 +22,7 @@ export class CloudflareZoneSubscription implements INodeType {
 		description: 'Manage zone subscriptions',
 		defaults: { name: 'Cloudflare Zone Subscription' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

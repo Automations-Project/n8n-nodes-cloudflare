@@ -30,6 +30,7 @@ export class CloudflareAiSearch implements INodeType {
 			name: 'Cloudflare AI Search',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

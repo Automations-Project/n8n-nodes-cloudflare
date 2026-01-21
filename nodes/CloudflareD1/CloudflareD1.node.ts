@@ -32,6 +32,7 @@ export class CloudflareD1 implements INodeType {
 			name: 'Cloudflare D1',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

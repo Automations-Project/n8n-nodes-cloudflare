@@ -22,6 +22,7 @@ export class CloudflareCertificateAuthorities implements INodeType {
 		description: 'Manage certificate authority hostname associations',
 		defaults: { name: 'Cloudflare Certificate Authorities' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

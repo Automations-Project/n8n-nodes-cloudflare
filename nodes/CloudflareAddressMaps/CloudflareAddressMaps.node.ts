@@ -21,6 +21,7 @@ export class CloudflareAddressMaps implements INodeType {
 		description: 'Manage Cloudflare Address Maps for IP addressing',
 		defaults: { name: 'Cloudflare Address Maps' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

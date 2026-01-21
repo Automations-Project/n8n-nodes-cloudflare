@@ -24,6 +24,7 @@ export class CloudflareStream implements INodeType {
 			name: 'Cloudflare Stream',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

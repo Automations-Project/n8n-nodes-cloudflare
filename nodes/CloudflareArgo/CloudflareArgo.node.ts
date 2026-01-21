@@ -23,6 +23,7 @@ export class CloudflareArgo implements INodeType {
 			name: 'Cloudflare Argo',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

@@ -23,6 +23,7 @@ export class CloudflareUrlScanner implements INodeType {
 			name: 'Cloudflare URL Scanner',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

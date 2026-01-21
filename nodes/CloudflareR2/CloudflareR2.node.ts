@@ -32,6 +32,7 @@ export class CloudflareR2 implements INodeType {
 			name: 'Cloudflare R2',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

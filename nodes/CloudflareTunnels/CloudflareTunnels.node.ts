@@ -22,6 +22,7 @@ export class CloudflareTunnels implements INodeType {
 		description: 'Manage Cloudflare Tunnels for secure connections',
 		defaults: { name: 'Cloudflare Tunnels' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

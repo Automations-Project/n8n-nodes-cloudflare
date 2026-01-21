@@ -22,6 +22,7 @@ export class CloudflarePageShield implements INodeType {
 		description: 'Manage Cloudflare Page Shield scripts, connections, and policies',
 		defaults: { name: 'Cloudflare Page Shield' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

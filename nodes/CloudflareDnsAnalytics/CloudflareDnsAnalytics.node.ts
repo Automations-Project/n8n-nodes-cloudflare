@@ -22,6 +22,7 @@ export class CloudflareDnsAnalytics implements INodeType {
 		description: 'Query DNS analytics reports',
 		defaults: { name: 'Cloudflare DNS Analytics' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

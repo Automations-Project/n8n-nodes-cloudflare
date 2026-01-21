@@ -22,6 +22,7 @@ export class CloudflareDex implements INodeType {
 		description: 'Manage Cloudflare Digital Experience Monitoring tests',
 		defaults: { name: 'Cloudflare DEX' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

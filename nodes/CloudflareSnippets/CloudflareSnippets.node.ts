@@ -27,6 +27,7 @@ export class CloudflareSnippets implements INodeType {
 			name: 'Cloudflare Snippets',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

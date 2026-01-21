@@ -27,6 +27,7 @@ export class CloudflareCustomNameservers implements INodeType {
 			name: 'Cloudflare Custom Nameservers',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

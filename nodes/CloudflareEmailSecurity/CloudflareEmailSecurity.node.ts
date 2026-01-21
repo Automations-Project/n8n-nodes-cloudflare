@@ -23,6 +23,7 @@ export class CloudflareEmailSecurity implements INodeType {
 			name: 'Cloudflare Email Security',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

@@ -22,6 +22,7 @@ export class CloudflareZoneSettings implements INodeType {
 		description: 'Manage Cloudflare zone settings',
 		defaults: { name: 'Cloudflare Zone Settings' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

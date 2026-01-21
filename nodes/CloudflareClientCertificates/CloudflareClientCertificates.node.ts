@@ -23,6 +23,7 @@ export class CloudflareClientCertificates implements INodeType {
 			name: 'Cloudflare Client Certificates',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

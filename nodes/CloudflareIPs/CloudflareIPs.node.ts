@@ -20,6 +20,7 @@ export class CloudflareIPs implements INodeType {
 		description: 'Get Cloudflare IP ranges',
 		defaults: { name: 'Cloudflare IPs' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

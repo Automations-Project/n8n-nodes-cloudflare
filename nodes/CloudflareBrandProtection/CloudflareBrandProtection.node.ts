@@ -21,6 +21,7 @@ export class CloudflareBrandProtection implements INodeType {
 		description: 'Manage Cloudflare Brand Protection for phishing detection',
 		defaults: { name: 'Cloudflare Brand Protection' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

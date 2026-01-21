@@ -23,6 +23,7 @@ export class CloudflareSpectrum implements INodeType {
 			name: 'Cloudflare Spectrum',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

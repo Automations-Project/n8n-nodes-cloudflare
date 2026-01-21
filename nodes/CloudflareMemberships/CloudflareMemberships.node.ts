@@ -20,6 +20,7 @@ export class CloudflareMemberships implements INodeType {
 		description: 'Manage user memberships to accounts',
 		defaults: { name: 'Cloudflare Memberships' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

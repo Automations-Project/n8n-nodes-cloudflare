@@ -30,6 +30,7 @@ export class CloudflareTurnstile implements INodeType {
 			name: 'Cloudflare Turnstile',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

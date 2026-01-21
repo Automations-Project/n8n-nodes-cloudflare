@@ -24,6 +24,7 @@ export class CloudflareMtlsCertificates implements INodeType {
 			name: 'Cloudflare mTLS Certificates',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

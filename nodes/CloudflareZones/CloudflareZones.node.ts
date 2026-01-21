@@ -66,6 +66,7 @@ export class CloudflareZones implements INodeType {
 			name: 'Cloudflare Zones',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

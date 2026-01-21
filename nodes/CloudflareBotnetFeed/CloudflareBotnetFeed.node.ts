@@ -21,6 +21,7 @@ export class CloudflareBotnetFeed implements INodeType {
 		description: 'Access Cloudflare botnet intelligence feed',
 		defaults: { name: 'Cloudflare Botnet Feed' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

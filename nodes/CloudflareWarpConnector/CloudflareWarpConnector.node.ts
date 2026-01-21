@@ -22,6 +22,7 @@ export class CloudflareWarpConnector implements INodeType {
 		description: 'Manage Cloudflare WARP Connector tunnels',
 		defaults: { name: 'Cloudflare WARP Connector' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

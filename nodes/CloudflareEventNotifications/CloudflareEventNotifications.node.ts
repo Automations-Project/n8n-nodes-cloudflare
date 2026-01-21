@@ -21,6 +21,7 @@ export class CloudflareEventNotifications implements INodeType {
 		description: 'Manage Cloudflare alerting destinations and policies',
 		defaults: { name: 'Cloudflare Event Notifications' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

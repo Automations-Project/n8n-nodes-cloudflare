@@ -21,6 +21,7 @@ export class CloudflareHostnameSettings implements INodeType {
 		description: 'Manage per-hostname TLS settings',
 		defaults: { name: 'Cloudflare Hostname Settings' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

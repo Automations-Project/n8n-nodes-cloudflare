@@ -32,6 +32,7 @@ export class CloudflareWorkersAi implements INodeType {
 			name: 'Cloudflare Workers AI',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

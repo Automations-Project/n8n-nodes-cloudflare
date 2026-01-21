@@ -34,6 +34,7 @@ export class CloudflareWaitingRooms implements INodeType {
 			name: 'Cloudflare Waiting Rooms',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

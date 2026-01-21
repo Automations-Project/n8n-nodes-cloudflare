@@ -21,6 +21,7 @@ export class CloudflareBrowserRendering implements INodeType {
 		description: 'Use Cloudflare Browser Rendering API for screenshots, PDFs, and scraping',
 		defaults: { name: 'Cloudflare Browser Rendering' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

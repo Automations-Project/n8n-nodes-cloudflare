@@ -27,6 +27,7 @@ export class CloudflareAccounts implements INodeType {
 			name: 'Cloudflare Accounts',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

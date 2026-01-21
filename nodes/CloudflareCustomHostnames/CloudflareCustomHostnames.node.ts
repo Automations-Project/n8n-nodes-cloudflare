@@ -25,6 +25,7 @@ export class CloudflareCustomHostnames implements INodeType {
 			name: 'Cloudflare Custom Hostnames',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

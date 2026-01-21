@@ -22,6 +22,7 @@ export class CloudflareCustomPages implements INodeType {
 		description: 'Manage Cloudflare custom error pages',
 		defaults: { name: 'Cloudflare Custom Pages' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

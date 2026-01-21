@@ -23,6 +23,7 @@ export class CloudflareZaraz implements INodeType {
 			name: 'Cloudflare Zaraz',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

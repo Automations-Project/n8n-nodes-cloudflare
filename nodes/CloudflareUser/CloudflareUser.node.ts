@@ -23,6 +23,7 @@ export class CloudflareUser implements INodeType {
 			name: 'Cloudflare User',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

@@ -24,6 +24,7 @@ export class CloudflareRateLimits implements INodeType {
 			name: 'Cloudflare Rate Limits',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

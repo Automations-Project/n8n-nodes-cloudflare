@@ -47,6 +47,7 @@ export class CloudflareDns implements INodeType {
 			name: 'Cloudflare DNS',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

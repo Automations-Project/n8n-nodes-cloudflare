@@ -21,6 +21,7 @@ export class CloudflareRatePlans implements INodeType {
 		description: 'List available rate plans for a zone',
 		defaults: { name: 'Cloudflare Rate Plans' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

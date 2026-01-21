@@ -34,6 +34,7 @@ export class CloudflarePages implements INodeType {
 			name: 'Cloudflare Pages',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

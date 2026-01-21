@@ -21,6 +21,7 @@ export class CloudflareShares implements INodeType {
 		description: 'Manage Cloudflare resource sharing across accounts',
 		defaults: { name: 'Cloudflare Shares' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

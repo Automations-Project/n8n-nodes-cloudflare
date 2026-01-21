@@ -22,6 +22,7 @@ export class CloudflareWorkersForPlatforms implements INodeType {
 		description: 'Manage Cloudflare Workers for Platforms (dispatch namespaces and scripts)',
 		defaults: { name: 'Cloudflare Workers for Platforms' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

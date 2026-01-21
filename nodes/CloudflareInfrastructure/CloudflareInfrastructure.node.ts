@@ -21,6 +21,7 @@ export class CloudflareInfrastructure implements INodeType {
 		description: 'Manage Cloudflare Infrastructure Access targets',
 		defaults: { name: 'Cloudflare Infrastructure' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

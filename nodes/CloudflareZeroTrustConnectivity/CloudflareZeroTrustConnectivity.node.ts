@@ -22,6 +22,7 @@ export class CloudflareZeroTrustConnectivity implements INodeType {
 		description: 'Manage Cloudflare Zero Trust connectivity settings',
 		defaults: { name: 'Cloudflare Zero Trust Connectivity' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

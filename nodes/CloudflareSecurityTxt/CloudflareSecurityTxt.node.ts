@@ -23,6 +23,7 @@ export class CloudflareSecurityTxt implements INodeType {
 			name: 'Cloudflare Security.txt',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

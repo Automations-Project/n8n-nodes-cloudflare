@@ -32,6 +32,7 @@ export class CloudflareRadar implements INodeType {
 		description: 'Get internet traffic, attacks, and analytics from Cloudflare Radar',
 		defaults: { name: 'Cloudflare Radar' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

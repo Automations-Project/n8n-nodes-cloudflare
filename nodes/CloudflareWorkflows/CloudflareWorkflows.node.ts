@@ -32,6 +32,7 @@ export class CloudflareWorkflows implements INodeType {
 			name: 'Cloudflare Workflows',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

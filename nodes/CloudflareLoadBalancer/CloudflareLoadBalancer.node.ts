@@ -37,6 +37,7 @@ export class CloudflareLoadBalancer implements INodeType {
 			name: 'Cloudflare Load Balancer',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

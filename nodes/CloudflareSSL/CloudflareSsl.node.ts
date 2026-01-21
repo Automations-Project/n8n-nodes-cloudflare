@@ -47,6 +47,7 @@ export class CloudflareSsl implements INodeType {
 			name: 'Cloudflare SSL/TLS',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

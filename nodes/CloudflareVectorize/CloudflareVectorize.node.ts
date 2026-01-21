@@ -32,6 +32,7 @@ export class CloudflareVectorize implements INodeType {
 			name: 'Cloudflare Vectorize',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

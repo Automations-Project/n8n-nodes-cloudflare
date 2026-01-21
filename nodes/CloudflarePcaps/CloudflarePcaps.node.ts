@@ -21,6 +21,7 @@ export class CloudflarePcaps implements INodeType {
 		description: 'Manage Cloudflare Magic Transit PCAP captures',
 		defaults: { name: 'Cloudflare PCAPs' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

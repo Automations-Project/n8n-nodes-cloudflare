@@ -21,6 +21,7 @@ export class CloudflareSuperSlurper implements INodeType {
 		description: 'Manage R2 Super Slurper migration jobs',
 		defaults: { name: 'Cloudflare Super Slurper' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

@@ -21,6 +21,7 @@ export class CloudflareMagicCloud implements INodeType {
 		description: 'Manage Cloudflare Magic Cloud Networking (connectors, integrations)',
 		defaults: { name: 'Cloudflare Magic Cloud' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

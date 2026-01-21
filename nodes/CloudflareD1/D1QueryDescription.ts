@@ -34,12 +34,15 @@ export const d1QueryFields: INodeProperties[] = [
 	//         Account ID
 	// ===========================================
 	{
-		displayName: 'Account ID',
+		displayName: 'Account Name or ID',
 		name: 'accountId',
-		type: 'string',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getAccounts',
+		},
 		required: true,
 		default: '',
-		description: 'Cloudflare Account ID',
+		description: 'Cloudflare Account ID. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 		displayOptions: {
 			show: {
 				resource: ['query'],
@@ -51,12 +54,16 @@ export const d1QueryFields: INodeProperties[] = [
 	//         Database ID
 	// ===========================================
 	{
-		displayName: 'Database ID',
+		displayName: 'Database Name or ID',
 		name: 'databaseId',
-		type: 'string',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getD1Databases',
+			loadOptionsDependsOn: ['accountId'],
+		},
 		required: true,
 		default: '',
-		description: 'ID of the D1 database to query',
+		description: 'ID of the D1 database to query. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 		displayOptions: {
 			show: {
 				resource: ['query'],

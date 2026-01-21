@@ -22,6 +22,7 @@ export class CloudflareDevices implements INodeType {
 		description: 'Manage Cloudflare Zero Trust devices',
 		defaults: { name: 'Cloudflare Devices' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

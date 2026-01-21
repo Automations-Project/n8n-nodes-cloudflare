@@ -21,6 +21,7 @@ export class CloudflarePrefixes implements INodeType {
 		description: 'Manage Cloudflare IP address prefixes (BYOIP)',
 		defaults: { name: 'Cloudflare Prefixes' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

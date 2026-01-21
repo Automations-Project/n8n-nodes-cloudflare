@@ -24,6 +24,7 @@ export class CloudflareFilters implements INodeType {
 			name: 'Cloudflare Filters',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

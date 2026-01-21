@@ -26,6 +26,7 @@ export class CloudflareImages implements INodeType {
 			name: 'Cloudflare Images',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

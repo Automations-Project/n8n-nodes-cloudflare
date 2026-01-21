@@ -35,6 +35,7 @@ export class CloudflareIntel implements INodeType {
 			name: 'Cloudflare Threat Intel',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

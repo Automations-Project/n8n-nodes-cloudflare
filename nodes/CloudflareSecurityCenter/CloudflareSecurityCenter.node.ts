@@ -21,6 +21,7 @@ export class CloudflareSecurityCenter implements INodeType {
 		description: 'Manage Cloudflare Security Center insights',
 		defaults: { name: 'Cloudflare Security Center' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

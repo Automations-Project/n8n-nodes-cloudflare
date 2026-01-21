@@ -21,6 +21,7 @@ export class CloudflareCloudConnector implements INodeType {
 		description: 'Manage Cloudflare Cloud Connector rules',
 		defaults: { name: 'Cloudflare Cloud Connector' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

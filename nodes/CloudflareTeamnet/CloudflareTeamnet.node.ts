@@ -22,6 +22,7 @@ export class CloudflareTeamnet implements INodeType {
 		description: 'Manage Cloudflare Tunnel network routes',
 		defaults: { name: 'Cloudflare Teamnet' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

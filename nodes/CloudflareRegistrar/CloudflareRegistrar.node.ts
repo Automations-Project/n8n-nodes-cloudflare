@@ -30,6 +30,7 @@ export class CloudflareRegistrar implements INodeType {
 			name: 'Cloudflare Registrar',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

@@ -32,6 +32,7 @@ export class CloudflareAiGateway implements INodeType {
 			name: 'Cloudflare AI Gateway',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

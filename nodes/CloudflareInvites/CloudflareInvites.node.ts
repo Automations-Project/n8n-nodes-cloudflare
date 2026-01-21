@@ -20,6 +20,7 @@ export class CloudflareInvites implements INodeType {
 		description: 'Manage Cloudflare user invites',
 		defaults: { name: 'Cloudflare Invites' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

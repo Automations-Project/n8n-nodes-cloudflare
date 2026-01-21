@@ -53,6 +53,7 @@ export class CloudflareWorkers implements INodeType {
 			name: 'Cloudflare Workers',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

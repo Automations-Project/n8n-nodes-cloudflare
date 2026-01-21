@@ -23,6 +23,7 @@ export class CloudflareWeb3 implements INodeType {
 			name: 'Cloudflare Web3',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

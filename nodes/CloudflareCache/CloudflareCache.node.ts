@@ -31,6 +31,7 @@ export class CloudflareCache implements INodeType {
 			name: 'Cloudflare Cache',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

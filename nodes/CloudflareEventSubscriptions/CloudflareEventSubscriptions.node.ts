@@ -21,6 +21,7 @@ export class CloudflareEventSubscriptions implements INodeType {
 		description: 'Manage Cloudflare event webhook subscriptions',
 		defaults: { name: 'Cloudflare Event Subscriptions' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

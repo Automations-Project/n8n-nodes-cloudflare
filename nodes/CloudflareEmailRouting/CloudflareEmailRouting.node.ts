@@ -36,6 +36,7 @@ export class CloudflareEmailRouting implements INodeType {
 			name: 'Cloudflare Email Routing',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

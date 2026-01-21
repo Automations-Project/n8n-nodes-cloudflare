@@ -23,6 +23,7 @@ export class CloudflareAuditLogs implements INodeType {
 			name: 'Cloudflare Audit Logs',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

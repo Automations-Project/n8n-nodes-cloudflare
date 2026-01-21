@@ -23,6 +23,7 @@ export class CloudflareSpeed implements INodeType {
 			name: 'Cloudflare Speed',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

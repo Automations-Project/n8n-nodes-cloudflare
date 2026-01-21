@@ -24,6 +24,7 @@ export class CloudflareOriginCa implements INodeType {
 			name: 'Cloudflare Origin CA',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

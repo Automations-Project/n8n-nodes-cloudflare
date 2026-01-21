@@ -24,6 +24,7 @@ export class CloudflareRulesets implements INodeType {
 			name: 'Cloudflare Rulesets',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

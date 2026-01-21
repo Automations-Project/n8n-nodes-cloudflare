@@ -32,6 +32,7 @@ export class CloudflareDurableObjects implements INodeType {
 			name: 'Cloudflare Durable Objects',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

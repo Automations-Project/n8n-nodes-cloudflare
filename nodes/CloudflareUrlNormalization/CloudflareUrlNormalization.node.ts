@@ -24,6 +24,7 @@ export class CloudflareUrlNormalization implements INodeType {
 			name: 'Cloudflare URL Normalization',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

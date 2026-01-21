@@ -24,6 +24,7 @@ export class CloudflareTotalTls implements INodeType {
 			name: 'Cloudflare Total TLS',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

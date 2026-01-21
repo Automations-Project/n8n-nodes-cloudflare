@@ -21,6 +21,7 @@ export class CloudflareCni implements INodeType {
 		description: 'Manage Cloudflare Network Interconnects',
 		defaults: { name: 'Cloudflare CNI' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

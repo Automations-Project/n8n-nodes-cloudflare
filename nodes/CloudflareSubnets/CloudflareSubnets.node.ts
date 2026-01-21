@@ -21,6 +21,7 @@ export class CloudflareSubnets implements INodeType {
 		description: 'Manage Cloudflare Zero Trust virtual network subnets',
 		defaults: { name: 'Cloudflare Subnets' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

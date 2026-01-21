@@ -21,6 +21,7 @@ export class CloudflareIam implements INodeType {
 		description: 'Manage Cloudflare IAM permission and resource groups',
 		defaults: { name: 'Cloudflare IAM' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

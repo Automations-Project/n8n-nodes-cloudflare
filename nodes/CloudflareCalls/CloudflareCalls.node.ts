@@ -25,6 +25,7 @@ export class CloudflareCalls implements INodeType {
 			name: 'Cloudflare Calls',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

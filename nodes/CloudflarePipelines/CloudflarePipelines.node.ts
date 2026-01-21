@@ -21,6 +21,7 @@ export class CloudflarePipelines implements INodeType {
 		description: 'Manage Cloudflare Pipelines for data ingestion',
 		defaults: { name: 'Cloudflare Pipelines' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

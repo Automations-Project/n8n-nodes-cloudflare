@@ -21,6 +21,7 @@ export class CloudflareApiGateway implements INodeType {
 		description: 'Manage Cloudflare API Gateway operations and schema validation',
 		defaults: { name: 'Cloudflare API Gateway' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

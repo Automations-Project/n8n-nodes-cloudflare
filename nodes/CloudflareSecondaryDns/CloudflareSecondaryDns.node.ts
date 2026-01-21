@@ -22,6 +22,7 @@ export class CloudflareSecondaryDns implements INodeType {
 		description: 'Manage Cloudflare Secondary DNS zone transfers',
 		defaults: { name: 'Cloudflare Secondary DNS' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

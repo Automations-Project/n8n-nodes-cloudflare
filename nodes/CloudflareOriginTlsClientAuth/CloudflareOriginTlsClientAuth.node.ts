@@ -23,6 +23,7 @@ export class CloudflareOriginTlsClientAuth implements INodeType {
 			name: 'Cloudflare Origin TLS Client Auth',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

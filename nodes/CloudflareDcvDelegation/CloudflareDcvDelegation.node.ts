@@ -21,6 +21,7 @@ export class CloudflareDcvDelegation implements INodeType {
 		description: 'Manage Cloudflare DCV Delegation for SSL certificates',
 		defaults: { name: 'Cloudflare DCV Delegation' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

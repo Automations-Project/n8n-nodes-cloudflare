@@ -30,6 +30,7 @@ export class CloudflareHyperdrive implements INodeType {
 			name: 'Cloudflare Hyperdrive',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

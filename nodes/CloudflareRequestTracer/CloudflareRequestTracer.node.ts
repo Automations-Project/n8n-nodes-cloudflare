@@ -21,6 +21,7 @@ export class CloudflareRequestTracer implements INodeType {
 		description: 'Trace HTTP requests through Cloudflare',
 		defaults: { name: 'Cloudflare Request Tracer' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

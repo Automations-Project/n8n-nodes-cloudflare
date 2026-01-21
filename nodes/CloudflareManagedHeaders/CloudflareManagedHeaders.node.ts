@@ -21,6 +21,7 @@ export class CloudflareManagedHeaders implements INodeType {
 		description: 'Manage Cloudflare managed request and response headers',
 		defaults: { name: 'Cloudflare Managed Headers' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

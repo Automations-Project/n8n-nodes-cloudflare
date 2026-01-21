@@ -23,6 +23,7 @@ export class CloudflareDiagnostics implements INodeType {
 			name: 'Cloudflare Diagnostics',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

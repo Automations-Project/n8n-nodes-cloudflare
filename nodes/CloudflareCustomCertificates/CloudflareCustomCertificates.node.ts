@@ -24,6 +24,7 @@ export class CloudflareCustomCertificates implements INodeType {
 			name: 'Cloudflare Custom Certificates',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

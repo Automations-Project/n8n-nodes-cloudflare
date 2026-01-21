@@ -57,6 +57,7 @@ export class CloudflareZeroTrust implements INodeType {
 			name: 'Cloudflare Zero Trust',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

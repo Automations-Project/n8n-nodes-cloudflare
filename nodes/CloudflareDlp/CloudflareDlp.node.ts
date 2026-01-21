@@ -21,6 +21,7 @@ export class CloudflareDlp implements INodeType {
 		description: 'Manage Cloudflare Data Loss Prevention datasets and profiles',
 		defaults: { name: 'Cloudflare DLP' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

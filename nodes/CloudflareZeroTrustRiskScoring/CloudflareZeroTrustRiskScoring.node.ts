@@ -22,6 +22,7 @@ export class CloudflareZeroTrustRiskScoring implements INodeType {
 		description: 'Manage Cloudflare Zero Trust user risk scoring',
 		defaults: { name: 'Cloudflare Zero Trust Risk Scoring' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

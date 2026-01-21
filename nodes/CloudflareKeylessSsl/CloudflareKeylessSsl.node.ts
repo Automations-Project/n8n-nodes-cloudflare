@@ -23,6 +23,7 @@ export class CloudflareKeylessSsl implements INodeType {
 			name: 'Cloudflare Keyless SSL',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

@@ -23,6 +23,7 @@ export class CloudflareAlerting implements INodeType {
 			name: 'Cloudflare Alerting',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

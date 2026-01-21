@@ -43,6 +43,7 @@ export class CloudflareFirewall implements INodeType {
 			name: 'Cloudflare Security',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

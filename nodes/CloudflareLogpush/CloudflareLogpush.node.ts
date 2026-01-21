@@ -30,6 +30,7 @@ export class CloudflareLogpush implements INodeType {
 			name: 'Cloudflare Logpush',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

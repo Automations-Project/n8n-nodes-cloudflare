@@ -21,6 +21,7 @@ export class CloudflareContentUploadScan implements INodeType {
 		description: 'Manage Cloudflare content upload malware scanning',
 		defaults: { name: 'Cloudflare Content Upload Scan' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

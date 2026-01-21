@@ -21,6 +21,7 @@ export class CloudflareCloudforceOne implements INodeType {
 		description: 'Access Cloudforce One threat intelligence',
 		defaults: { name: 'Cloudflare Cloudforce One' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

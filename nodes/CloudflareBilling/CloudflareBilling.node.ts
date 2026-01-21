@@ -21,6 +21,7 @@ export class CloudflareBilling implements INodeType {
 		description: 'Get billing profile information',
 		defaults: { name: 'Cloudflare Billing' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

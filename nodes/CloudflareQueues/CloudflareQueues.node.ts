@@ -35,6 +35,7 @@ export class CloudflareQueues implements INodeType {
 			name: 'Cloudflare Queues',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

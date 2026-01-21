@@ -20,6 +20,7 @@ export class CloudflareOrganizations implements INodeType {
 		description: 'Manage Cloudflare user organizations',
 		defaults: { name: 'Cloudflare Organizations' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

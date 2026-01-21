@@ -21,6 +21,7 @@ export class CloudflareMnm implements INodeType {
 		description: 'Manage Magic Network Monitoring configuration and rules',
 		defaults: { name: 'Cloudflare Magic Network Monitoring' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

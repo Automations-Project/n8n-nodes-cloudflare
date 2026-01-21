@@ -24,6 +24,7 @@ export class CloudflareBotManagement implements INodeType {
 			name: 'Cloudflare Bot Management',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

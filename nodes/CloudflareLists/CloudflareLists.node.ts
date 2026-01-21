@@ -21,6 +21,7 @@ export class CloudflareLists implements INodeType {
 		description: 'Manage Cloudflare Lists for IP, hostname, ASN, and redirect lists',
 		defaults: { name: 'Cloudflare Lists' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

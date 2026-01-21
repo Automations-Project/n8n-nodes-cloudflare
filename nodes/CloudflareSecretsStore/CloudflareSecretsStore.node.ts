@@ -21,6 +21,7 @@ export class CloudflareSecretsStore implements INodeType {
 		description: 'Manage Cloudflare Secrets Store for secure secret storage',
 		defaults: { name: 'Cloudflare Secrets Store' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

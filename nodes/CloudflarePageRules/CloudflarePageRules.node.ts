@@ -24,6 +24,7 @@ export class CloudflarePageRules implements INodeType {
 			name: 'Cloudflare Page Rules',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

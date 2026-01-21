@@ -21,6 +21,7 @@ export class CloudflareAbuseReports implements INodeType {
 		description: 'Submit abuse reports to Cloudflare',
 		defaults: { name: 'Cloudflare Abuse Reports' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

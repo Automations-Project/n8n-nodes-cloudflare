@@ -21,6 +21,7 @@ export class CloudflareTokens implements INodeType {
 		description: 'Manage Cloudflare API tokens',
 		defaults: { name: 'Cloudflare Tokens' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

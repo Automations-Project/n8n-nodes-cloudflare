@@ -34,6 +34,7 @@ export class CloudflareKv implements INodeType {
 			name: 'Cloudflare KV',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

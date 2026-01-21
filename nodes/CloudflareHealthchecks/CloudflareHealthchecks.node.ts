@@ -23,6 +23,7 @@ export class CloudflareHealthchecks implements INodeType {
 			name: 'Cloudflare Healthchecks',
 		},
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [
 			{

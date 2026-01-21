@@ -22,6 +22,7 @@ export class CloudflareLeakedCredentialChecks implements INodeType {
 		description: 'Manage Cloudflare leaked credential detection',
 		defaults: { name: 'Cloudflare Leaked Credential Checks' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

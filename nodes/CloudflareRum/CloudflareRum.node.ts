@@ -21,6 +21,7 @@ export class CloudflareRum implements INodeType {
 		description: 'Manage Cloudflare Real User Monitoring sites',
 		defaults: { name: 'Cloudflare RUM' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {

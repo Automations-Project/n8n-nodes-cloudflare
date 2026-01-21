@@ -21,6 +21,7 @@ export class CloudflareSchemaValidation implements INodeType {
 		description: 'Manage Cloudflare API Gateway schema validation',
 		defaults: { name: 'Cloudflare Schema Validation' },
 		inputs: ['main'],
+		usableAsTool: true,
 		outputs: ['main'],
 		credentials: [{ name: 'cloudflareApi', required: true }],
 		requestDefaults: {
