@@ -184,6 +184,14 @@ export const r2ObjectFields: INodeProperties[] = [
 				placeholder: 'max-age=3600',
 				description: 'Cache-Control header for the object',
 			},
+			{
+				displayName: 'Body Mapping Field',
+				name: 'bodyMappingField',
+				type: 'string',
+				default: '',
+				placeholder: 'content',
+				description: 'When specified, extracts this field from JSON input as the raw body. Useful for AI Agent tool calls that wrap content in JSON like {"fileName": "...", "content": "..."}.',
+			},
 		],
 	},
 

@@ -80,12 +80,27 @@ export async function r2ObjectExecute(
 		const uploadOptions = this.getNodeParameter('uploadOptions', itemIndex) as {
 			contentType?: string;
 			cacheControl?: string;
+			bodyMappingField?: string;
 		};
 
 		let content: string | Buffer;
 
 		if (contentSource === 'text') {
-			content = this.getNodeParameter('content', itemIndex) as string;
+			let rawContent = this.getNodeParameter('content', itemIndex) as string;
+
+			// Check if body mapping field is specified to extract from JSON
+			const bodyMappingField = uploadOptions.bodyMappingField;
+			if (bodyMappingField) {
+				try {
+					const parsed = JSON.parse(rawContent);
+					if (parsed && typeof parsed === 'object' && bodyMappingField in parsed) {
+						rawContent = String(parsed[bodyMappingField]);
+					}
+				} catch {
+					// Not valid JSON, use content as-is
+				}
+			}
+			content = rawContent;
 		} else {
 			const binaryPropertyName = this.getNodeParameter('binaryPropertyName', itemIndex) as string;
 			content = await this.helpers.getBinaryDataBuffer(itemIndex, binaryPropertyName);
