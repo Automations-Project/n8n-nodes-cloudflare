@@ -95,6 +95,9 @@ export async function r2ObjectExecute(
 					const parsed = JSON.parse(rawContent);
 					if (parsed && typeof parsed === 'object' && bodyMappingField in parsed) {
 						rawContent = String(parsed[bodyMappingField]);
+						// Unescape newlines that may have been escaped during JSON serialization
+						// This is critical for AI Agent tool outputs where \n becomes literal \\n
+						rawContent = rawContent.replace(/\\n/g, '\n').replace(/\\r/g, '\r').replace(/\\t/g, '\t');
 					}
 				} catch {
 					// Not valid JSON, use content as-is
