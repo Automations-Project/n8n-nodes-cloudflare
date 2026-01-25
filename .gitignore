@@ -8,6 +8,7 @@
 
 # 2. General Exclusions (Apply even inside allowed directories)
 #    These safeguard against tracking junk files if they appear in allowed folders.
+
 node_modules/
 dist/
 coverage/
@@ -59,6 +60,7 @@ Thumbs.db
 !/README.md
 !/intro.png
 
+
 # Project Source & Dependencies
 !/gulpfile.js
 !/index.js
@@ -79,3 +81,8 @@ Thumbs.db
 !/scripts/setup-dev-windows.js
 !/scripts/start-dev.mjs
 !/scripts/watch-n8n.js
+
+# Docs (Selective)
+!/docs/
+/docs/*
+!/docs/RAG-WORKFLOW-GUIDE.md
