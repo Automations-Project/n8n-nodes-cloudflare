@@ -452,8 +452,56 @@ export async function getRulesets(this: ILoadOptionsFunctions): Promise<INodePro
 		if (!Array.isArray(rulesets)) return [];
 
 		return rulesets.map((rs) => ({
-			name: (rs.name as string) || (rs.id as string),
+			name: `${rs.name || rs.id}${rs.phase ? ` (${rs.phase})` : ''}`,
 			value: rs.id as string,
+			description: (rs.description as string) || undefined,
+		}));
+	} catch {
+		return [];
+	}
+}
+
+/**
+ * Get Rules from a Ruleset for dropdown options
+ */
+export async function getRules(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	try {
+		const scope = this.getNodeParameter('scope', 0) as string;
+		let basePath = '';
+		if (scope === 'zone') {
+			const zoneId = this.getNodeParameter('zoneId', 0) as string;
+			if (!zoneId) return [];
+			basePath = `/zones/${zoneId}/rulesets`;
+		} else {
+			const accountId = this.getNodeParameter('accountId', 0) as string;
+			if (!accountId) return [];
+			basePath = `/accounts/${accountId}/rulesets`;
+		}
+
+		// Try to get the ruleset ID from different possible parameter names
+		let rulesetId = '';
+		try {
+			rulesetId = this.getNodeParameter('ruleRulesetId', 0) as string;
+		} catch {
+			try {
+				rulesetId = this.getNodeParameter('rulesetId', 0) as string;
+			} catch {
+				return [];
+			}
+		}
+
+		if (!rulesetId) return [];
+
+		const response = await cloudflareApiRequest.call(this, 'GET', `${basePath}/${rulesetId}`);
+		const ruleset = response as IDataObject;
+		const rules = ruleset.rules as IDataObject[];
+
+		if (!Array.isArray(rules)) return [];
+
+		return rules.map((rule) => ({
+			name: `${rule.description || rule.action || 'Rule'} (${(rule.id as string).substring(0, 8)}...)`,
+			value: rule.id as string,
+			description: (rule.expression as string) || undefined,
 		}));
 	} catch {
 		return [];
@@ -557,7 +605,7 @@ export async function getSpectrumApps(this: ILoadOptionsFunctions): Promise<INod
 		if (!Array.isArray(apps)) return [];
 
 		return apps.map((app) => ({
-			name: (app.dns as IDataObject)?.name as string || app.id as string,
+			name: ((app.dns as IDataObject)?.name as string) || (app.id as string),
 			value: app.id as string,
 		}));
 	} catch {
@@ -599,7 +647,7 @@ export async function getFilters(this: ILoadOptionsFunctions): Promise<INodeProp
 		if (!Array.isArray(filters)) return [];
 
 		return filters.map((filter) => ({
-			name: (filter.expression as string)?.substring(0, 50) || filter.id as string,
+			name: (filter.expression as string)?.substring(0, 50) || (filter.id as string),
 			value: filter.id as string,
 		}));
 	} catch {

@@ -57,6 +57,7 @@ export const aiSearchFields: INodeProperties[] = [
 		default: '',
 		typeOptions: {
 			loadOptionsMethod: 'getAISearchInstances',
+			loadOptionsDependsOn: ['accountId'],
 		},
 		hint: 'Select your AI Search (AutoRAG) application',
 		displayOptions: {

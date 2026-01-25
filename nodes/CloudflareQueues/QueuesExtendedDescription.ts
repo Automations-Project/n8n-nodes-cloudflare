@@ -27,7 +27,10 @@ export const queuesConsumerFields: INodeProperties[] = [
 		name: 'consumerQueueName',
 		type: 'options',
 		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
-		typeOptions: { loadOptionsMethod: 'getQueues' },
+		typeOptions: {
+			loadOptionsMethod: 'getQueues',
+			loadOptionsDependsOn: ['accountId'],
+		},
 		required: true,
 		default: '',
 		displayOptions: { show: { resource: ['consumer'] } },
@@ -45,7 +48,10 @@ export const queuesConsumerFields: INodeProperties[] = [
 		name: 'consumerScript',
 		type: 'options',
 		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
-		typeOptions: { loadOptionsMethod: 'getWorkerScripts' },
+		typeOptions: {
+			loadOptionsMethod: 'getWorkerScripts',
+			loadOptionsDependsOn: ['accountId'],
+		},
 		required: true,
 		default: '',
 		displayOptions: { show: { resource: ['consumer'], operation: ['create'] } },

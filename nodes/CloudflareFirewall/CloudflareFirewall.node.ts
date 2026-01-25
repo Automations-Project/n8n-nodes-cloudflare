@@ -6,7 +6,7 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 
-import { getAccounts, getZones } from '../shared/SharedMethods';
+import { getAccounts, getZones, getRulesets, getRules } from '../shared/SharedMethods';
 
 import { accessRuleOperations, accessRuleFields } from './FirewallAccessRuleDescription';
 import { lockdownOperations, lockdownFields } from './LockdownDescription';
@@ -139,6 +139,8 @@ export class CloudflareFirewall implements INodeType {
 		loadOptions: {
 			getAccounts,
 			getZones,
+			getRulesets,
+			getRules,
 		},
 	};
 

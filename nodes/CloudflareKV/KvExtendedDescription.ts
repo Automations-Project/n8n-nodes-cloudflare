@@ -23,7 +23,10 @@ export const kvMetadataFields: INodeProperties[] = [
 		name: 'metadataNamespaceId',
 		type: 'options',
 		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
-		typeOptions: { loadOptionsMethod: 'getKvNamespaces' },
+		typeOptions: {
+			loadOptionsMethod: 'getKvNamespaces',
+			loadOptionsDependsOn: ['accountId'],
+		},
 		required: true,
 		default: '',
 		displayOptions: { show: { resource: ['metadata'] } },

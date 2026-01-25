@@ -94,12 +94,16 @@ export const rulesetFields: INodeProperties[] = [
 
 	// Ruleset ID for get/update/delete
 	{
-		displayName: 'Ruleset ID',
+		displayName: 'Ruleset Name or ID',
 		name: 'rulesetId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
-		description: 'ID of the ruleset',
+		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+		typeOptions: {
+			loadOptionsMethod: 'getRulesets',
+			loadOptionsDependsOn: ['scope', 'accountId', 'zoneId'],
+		},
 		displayOptions: {
 			show: {
 				resource: ['ruleset'],
@@ -269,10 +273,15 @@ export const rulesetFields: INodeProperties[] = [
 		displayOptions: { show: { resource: ['phase'] } },
 	},
 	{
-		displayName: 'Ruleset ID',
+		displayName: 'Ruleset Name or ID',
 		name: 'phaseRulesetId',
-		type: 'string',
+		type: 'options',
 		default: '',
+		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+		typeOptions: {
+			loadOptionsMethod: 'getRulesets',
+			loadOptionsDependsOn: ['scope', 'accountId', 'zoneId'],
+		},
 		displayOptions: { show: { resource: ['phase'], operation: ['listVersions', 'getVersion'] } },
 	},
 	{
@@ -289,28 +298,218 @@ export const rulesetFields: INodeProperties[] = [
 		default: '[]',
 		displayOptions: { show: { resource: ['phase'], operation: ['updateEntrypoint'] } },
 	},
-	// Rule Fields
 	{
-		displayName: 'Ruleset ID',
+		displayName: 'Ruleset Name or ID',
 		name: 'ruleRulesetId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+		typeOptions: {
+			loadOptionsMethod: 'getRulesets',
+			loadOptionsDependsOn: ['scope', 'accountId', 'zoneId'],
+		},
 		displayOptions: { show: { resource: ['rule'] } },
 	},
 	{
-		displayName: 'Rule ID',
+		displayName: 'Rule Name or ID',
 		name: 'ruleId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+		typeOptions: {
+			loadOptionsMethod: 'getRules',
+			loadOptionsDependsOn: ['scope', 'accountId', 'zoneId', 'ruleRulesetId'],
+		},
 		displayOptions: { show: { resource: ['rule'], operation: ['delete', 'update'] } },
 	},
+	// ===========================================
+	//         Rule Input Mode Selection
+	// ===========================================
+	{
+		displayName: 'Input Mode',
+		name: 'ruleInputMode',
+		type: 'options',
+		options: [
+			{ name: 'GUI Builder', value: 'gui', description: 'Use the visual builder to create rules' },
+			{ name: 'JSON', value: 'json', description: 'Provide rule definition as raw JSON' },
+		],
+		default: 'gui',
+		description: 'Choose how to define the rule',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'] } },
+	},
+	// ===========================================
+	//         JSON Mode - Rule Definition
+	// ===========================================
 	{
 		displayName: 'Rule (JSON)',
 		name: 'ruleDefinition',
 		type: 'json',
 		default: '{}',
-		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'] } },
+		description: 'Rule definition as raw JSON. See <a href="https://developers.cloudflare.com/ruleset-engine/rulesets-api/">Cloudflare Rulesets API</a> for schema.',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['json'] } },
+	},
+	// ===========================================
+	//         GUI Mode - Rule Builder
+	// ===========================================
+	{
+		displayName: 'Rule Description',
+		name: 'ruleDescription',
+		type: 'string',
+		default: '',
+		description: 'A human-readable description for this rule',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'] } },
+	},
+	{
+		displayName: 'Expression (Filter)',
+		name: 'ruleExpression',
+		type: 'string',
+		default: 'true',
+		required: true,
+		description: 'The filter expression that determines when this rule triggers. Use "true" to match all requests. See <a href="https://developers.cloudflare.com/ruleset-engine/rules-language/expressions/">Cloudflare expressions</a>.',
+		placeholder: '(http.host eq "example.com" and http.request.uri.path eq "/old-page")',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'] } },
+	},
+	{
+		displayName: 'Action',
+		name: 'ruleAction',
+		type: 'options',
+		options: [
+			{ name: 'Redirect', value: 'redirect', description: 'Redirect the request to a different URL' },
+			{ name: 'Block', value: 'block', description: 'Block the request' },
+			{ name: 'JS Challenge', value: 'js_challenge', description: 'Present a JavaScript challenge' },
+			{ name: 'Managed Challenge', value: 'managed_challenge', description: 'Present a managed challenge' },
+			{ name: 'Log', value: 'log', description: 'Log the request without taking action' },
+			{ name: 'Skip', value: 'skip', description: 'Skip other rules' },
+			{ name: 'Rewrite', value: 'rewrite', description: 'Rewrite the request URI or query string' },
+			{ name: 'Route', value: 'route', description: 'Route to a specific origin' },
+			{ name: 'Set Config', value: 'set_config', description: 'Modify Cloudflare configuration settings' },
+		],
+		default: 'redirect',
+		required: true,
+		description: 'The action to take when the rule matches',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'] } },
+	},
+	// ===========================================
+	//         Redirect Action Parameters
+	// ===========================================
+	{
+		displayName: 'Redirect Type',
+		name: 'redirectType',
+		type: 'options',
+		options: [
+			{ name: 'Static URL', value: 'static', description: 'Redirect to a fixed URL' },
+			{ name: 'Dynamic URL', value: 'dynamic', description: 'Redirect using an expression to build the target URL' },
+		],
+		default: 'static',
+		description: 'Whether to use a static URL or a dynamic expression',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['redirect'] } },
+	},
+	{
+		displayName: 'Target URL',
+		name: 'redirectTargetUrl',
+		type: 'string',
+		default: '',
+		required: true,
+		description: 'The URL to redirect to',
+		placeholder: 'https://example.com/new-page',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['redirect'], redirectType: ['static'] } },
+	},
+	{
+		displayName: 'Target URL Expression',
+		name: 'redirectTargetExpression',
+		type: 'string',
+		default: '',
+		required: true,
+		description: 'An expression that evaluates to the target URL. See <a href="https://developers.cloudflare.com/ruleset-engine/rules-language/expressions/">Cloudflare expressions</a>.',
+		placeholder: 'concat("https://example.com", http.request.uri.path)',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['redirect'], redirectType: ['dynamic'] } },
+	},
+	{
+		displayName: 'Status Code',
+		name: 'redirectStatusCode',
+		type: 'options',
+		options: [
+			{ name: '301 - Moved Permanently', value: 301 },
+			{ name: '302 - Found (Moved Temporarily)', value: 302 },
+			{ name: '307 - Temporary Redirect', value: 307 },
+			{ name: '308 - Permanent Redirect', value: 308 },
+		],
+		default: 301,
+		description: 'The HTTP status code to use for the redirect',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['redirect'] } },
+	},
+	{
+		displayName: 'Preserve Query String',
+		name: 'redirectPreserveQuery',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to keep the original query string in the redirected URL',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['redirect'] } },
+	},
+	// ===========================================
+	//         Rewrite Action Parameters
+	// ===========================================
+	{
+		displayName: 'Rewrite Type',
+		name: 'rewriteType',
+		type: 'options',
+		options: [
+			{ name: 'URI Path', value: 'uri_path', description: 'Rewrite the request URI path' },
+			{ name: 'Query String', value: 'query', description: 'Rewrite the query string' },
+		],
+		default: 'uri_path',
+		description: 'What part of the request to rewrite',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['rewrite'] } },
+	},
+	{
+		displayName: 'Is Dynamic',
+		name: 'rewriteIsDynamic',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to use a dynamic expression instead of a static value',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['rewrite'] } },
+	},
+	{
+		displayName: 'New Path/Query Value',
+		name: 'rewriteValue',
+		type: 'string',
+		default: '',
+		description: 'The new static value for the path or query string',
+		placeholder: '/new-path',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['rewrite'], rewriteIsDynamic: [false] } },
+	},
+	{
+		displayName: 'Dynamic Expression',
+		name: 'rewriteExpression',
+		type: 'string',
+		default: '',
+		description: 'An expression that evaluates to the new path or query value',
+		placeholder: 'concat("/api/v2", http.request.uri.path)',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['rewrite'], rewriteIsDynamic: [true] } },
+	},
+	// ===========================================
+	//         Route Action Parameters
+	// ===========================================
+	{
+		displayName: 'Origin Hostname',
+		name: 'routeHostname',
+		type: 'string',
+		default: '',
+		description: 'The hostname of the origin server to route to',
+		placeholder: 'origin.example.com',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'], ruleAction: ['route'] } },
+	},
+	// ===========================================
+	//         Common Rule Options
+	// ===========================================
+	{
+		displayName: 'Rule Enabled',
+		name: 'ruleEnabled',
+		type: 'boolean',
+		default: true,
+		description: 'Whether the rule is enabled',
+		displayOptions: { show: { resource: ['rule'], operation: ['create', 'update'], ruleInputMode: ['gui'] } },
 	},
 ];

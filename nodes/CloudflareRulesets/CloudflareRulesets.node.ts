@@ -6,7 +6,7 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 
-import { getAccounts, getZones } from '../shared/SharedMethods';
+import { getAccounts, getZones, getRulesets, getRules } from '../shared/SharedMethods';
 import { rulesetOperations, rulesetFields } from './RulesetDescription';
 import { rulesetsExecute } from './RulesetsExecute';
 
@@ -57,7 +57,7 @@ export class CloudflareRulesets implements INodeType {
 		],
 	};
 
-	methods = { loadOptions: { getAccounts, getZones } };
+	methods = { loadOptions: { getAccounts, getZones, getRulesets, getRules } };
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
