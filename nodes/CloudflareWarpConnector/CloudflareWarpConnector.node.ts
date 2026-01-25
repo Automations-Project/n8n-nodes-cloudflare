@@ -16,7 +16,7 @@ export class CloudflareWarpConnector implements INodeType {
 		name: 'cloudflareWarpConnector',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareZeroTrust node
+		// hidden: true, // Merged into CloudflareZeroTrust node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare WARP Connector tunnels',

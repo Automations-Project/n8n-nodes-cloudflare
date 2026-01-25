@@ -16,7 +16,7 @@ export class CloudflareCustomCertificates implements INodeType {
 		name: 'cloudflareCustomCertificates',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareSsl node
+		// hidden: true, // Merged into CloudflareSsl node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage custom SSL certificates',

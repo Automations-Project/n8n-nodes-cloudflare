@@ -16,7 +16,7 @@ export class CloudflareRulesets implements INodeType {
 		name: 'cloudflareRulesets',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareFirewall (Security)
+
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare rulesets (WAF, Transform Rules, etc)',

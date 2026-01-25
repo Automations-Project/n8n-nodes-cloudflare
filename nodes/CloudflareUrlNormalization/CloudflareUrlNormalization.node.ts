@@ -16,7 +16,7 @@ export class CloudflareUrlNormalization implements INodeType {
 		name: 'cloudflareUrlNormalization',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareZones node
+		// hidden: true, // Merged into CloudflareZones node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare URL normalization settings',

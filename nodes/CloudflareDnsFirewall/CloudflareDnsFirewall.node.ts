@@ -16,7 +16,7 @@ export class CloudflareDnsFirewall implements INodeType {
 		name: 'cloudflareDnsFirewall',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareDns node
+		// hidden: true, // Merged into CloudflareDns node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare DNS Firewall clusters',

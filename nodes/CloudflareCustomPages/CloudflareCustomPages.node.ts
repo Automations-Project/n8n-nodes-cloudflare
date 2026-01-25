@@ -16,7 +16,7 @@ export class CloudflareCustomPages implements INodeType {
 		name: 'cloudflareCustomPages',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareZones node
+		// hidden: true, // Merged into CloudflareZones node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare custom error pages',

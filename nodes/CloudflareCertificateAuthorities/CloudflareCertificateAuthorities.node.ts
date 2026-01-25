@@ -16,7 +16,7 @@ export class CloudflareCertificateAuthorities implements INodeType {
 		name: 'cloudflareCertificateAuthorities',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareSsl node
+		// hidden: true, // Merged into CloudflareSsl node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage certificate authority hostname associations',

@@ -16,7 +16,7 @@ export class CloudflareRateLimits implements INodeType {
 		name: 'cloudflareRateLimits',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareFirewall (Security)
+		// hidden: true, // Merged into CloudflareFirewall (Security)
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Rate Limiting Rules (Legacy)',

@@ -16,7 +16,7 @@ export class CloudflareTeamnet implements INodeType {
 		name: 'cloudflareTeamnet',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareZeroTrust node
+		// hidden: true, // Merged into CloudflareZeroTrust node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Tunnel network routes',

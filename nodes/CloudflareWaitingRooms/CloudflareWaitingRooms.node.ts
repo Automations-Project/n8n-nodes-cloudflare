@@ -26,7 +26,7 @@ export class CloudflareWaitingRooms implements INodeType {
 		name: 'cloudflareWaitingRooms',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareZones node
+		// hidden: true, // Merged into CloudflareZones node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare waiting rooms, events, and rules',

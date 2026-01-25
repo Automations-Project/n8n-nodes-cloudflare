@@ -16,7 +16,7 @@ export class CloudflarePageRules implements INodeType {
 		name: 'cloudflarePageRules',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareZones node
+		// hidden: true, // Merged into CloudflareZones node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Page Rules (Legacy)',

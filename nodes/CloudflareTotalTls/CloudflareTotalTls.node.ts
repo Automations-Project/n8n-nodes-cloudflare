@@ -16,7 +16,7 @@ export class CloudflareTotalTls implements INodeType {
 		name: 'cloudflareTotalTls',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareSsl node
+		// hidden: true, // Merged into CloudflareSsl node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Total TLS (automatic certificate issuance)',

@@ -16,7 +16,7 @@ export class CloudflareLeakedCredentialChecks implements INodeType {
 		name: 'cloudflareLeakedCredentialChecks',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareFirewall (Security)
+		// hidden: true, // Merged into CloudflareFirewall (Security)
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare leaked credential detection',

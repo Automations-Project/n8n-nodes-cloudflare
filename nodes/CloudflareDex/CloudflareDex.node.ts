@@ -16,7 +16,7 @@ export class CloudflareDex implements INodeType {
 		name: 'cloudflareDex',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareZeroTrust node
+		// hidden: true, // Merged into CloudflareZeroTrust node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Digital Experience Monitoring tests',

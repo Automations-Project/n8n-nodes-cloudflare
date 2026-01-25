@@ -16,7 +16,7 @@ export class CloudflareZeroTrustRiskScoring implements INodeType {
 		name: 'cloudflareZeroTrustRiskScoring',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareZeroTrust node
+		// hidden: true, // Merged into CloudflareZeroTrust node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Zero Trust user risk scoring',

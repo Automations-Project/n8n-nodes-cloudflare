@@ -16,7 +16,7 @@ export class CloudflareTunnels implements INodeType {
 		name: 'cloudflareTunnels',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareZeroTrust node
+		// hidden: true, // Merged into CloudflareZeroTrust node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Tunnels for secure connections',

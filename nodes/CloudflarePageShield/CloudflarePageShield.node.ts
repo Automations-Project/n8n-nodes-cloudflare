@@ -16,7 +16,7 @@ export class CloudflarePageShield implements INodeType {
 		name: 'cloudflarePageShield',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareFirewall (Security)
+		// hidden: true, // Merged into CloudflareFirewall (Security)
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Page Shield scripts, connections, and policies',

@@ -16,7 +16,7 @@ export class CloudflareWorkersForPlatforms implements INodeType {
 		name: 'cloudflareWorkersForPlatforms',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareWorkers node
+		// hidden: true, // Merged into CloudflareWorkers node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Workers for Platforms (dispatch namespaces and scripts)',

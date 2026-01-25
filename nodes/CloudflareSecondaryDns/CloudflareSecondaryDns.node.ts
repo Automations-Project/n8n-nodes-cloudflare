@@ -16,7 +16,7 @@ export class CloudflareSecondaryDns implements INodeType {
 		name: 'cloudflareSecondaryDns',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareDns node
+		// hidden: true, // Merged into CloudflareDns node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare Secondary DNS zone transfers',

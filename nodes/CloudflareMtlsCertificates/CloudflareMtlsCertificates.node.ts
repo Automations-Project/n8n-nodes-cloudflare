@@ -16,7 +16,7 @@ export class CloudflareMtlsCertificates implements INodeType {
 		name: 'cloudflareMtlsCertificates',
 		icon: 'file:cloudflare.svg',
 		group: ['transform'],
-		hidden: true, // Merged into CloudflareSsl node
+		// hidden: true, // Merged into CloudflareSsl node
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Manage Cloudflare mTLS (mutual TLS) certificates',
