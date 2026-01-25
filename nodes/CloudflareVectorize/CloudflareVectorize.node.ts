@@ -8,8 +8,10 @@ import {
 
 import { vectorizeIndexOperations, vectorizeIndexFields } from './VectorizeIndexDescription';
 import { vectorizeVectorOperations, vectorizeVectorFields } from './VectorizeVectorDescription';
+import { vectorizeRagOperations, vectorizeRagFields } from './VectorizeRagDescription';
 import { vectorizeIndexExecute } from './VectorizeIndexExecute';
 import { vectorizeVectorExecute } from './VectorizeVectorExecute';
+import { vectorizeRagExecute } from './VectorizeRagExecute';
 import { getAccounts, getVectorizeIndexes } from '../shared/SharedMethods';
 
 export class CloudflareVectorize implements INodeType {
@@ -59,6 +61,11 @@ export class CloudflareVectorize implements INodeType {
 						value: 'index',
 					},
 					{
+						name: 'RAG (Embed + Store)',
+						value: 'rag',
+						description: 'Convenient RAG operations that combine embedding generation and vector storage',
+					},
+					{
 						name: 'Vector',
 						value: 'vector',
 					},
@@ -67,6 +74,8 @@ export class CloudflareVectorize implements INodeType {
 			},
 			...vectorizeIndexOperations,
 			...vectorizeIndexFields,
+			...vectorizeRagOperations,
+			...vectorizeRagFields,
 			...vectorizeVectorOperations,
 			...vectorizeVectorFields,
 		],
@@ -85,6 +94,8 @@ export class CloudflareVectorize implements INodeType {
 					result = await vectorizeIndexExecute.call(this, i);
 				} else if (resource === 'vector') {
 					result = await vectorizeVectorExecute.call(this, i);
+				} else if (resource === 'rag') {
+					result = await vectorizeRagExecute.call(this, i);
 				} else {
 					throw new NodeOperationError(this.getNode(), `Unknown resource: ${resource}`, { itemIndex: i });
 				}

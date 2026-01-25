@@ -82,32 +82,29 @@ R2 Storage, D1 Database, Pages, Stream, Images, Queues, Load Balancer, Registrar
 
 ```json
 {
-  "nodes": [
-    {
-      "parameters": {
-        "zoneId": "2454f994f1057a933cf06857ea485578",
-        "returnAll": true,
-        "filters": {
-          "proxied": true
-        }
-      },
-      "type": "CUSTOM.cloudflareDns",
-      "typeVersion": 1,
-      "position": [
-        208,
-        0
-      ],
-      "id": "ba613500-5af9-4a88-8334-1230e875c060",
-      "name": "Get many DNS records",
-      "credentials": {
-        "cloudflareApi": {
-          "id": "46t5YxHZ7Xygke2Z",
-          "name": "Cloudflare account"
-        }
-      }
-    }
-  ],
-  "connections": {}
+	"nodes": [
+		{
+			"parameters": {
+				"zoneId": "2454f994f1057a933cf06857ea485578",
+				"returnAll": true,
+				"filters": {
+					"proxied": true
+				}
+			},
+			"type": "CUSTOM.cloudflareDns",
+			"typeVersion": 1,
+			"position": [208, 0],
+			"id": "ba613500-5af9-4a88-8334-1230e875c060",
+			"name": "Get many DNS records",
+			"credentials": {
+				"cloudflareApi": {
+					"id": "46t5YxHZ7Xygke2Z",
+					"name": "Cloudflare account"
+				}
+			}
+		}
+	],
+	"connections": {}
 }
 ```
 
@@ -129,6 +126,17 @@ n8n requires that all installed nodes have unique internal names. If you have ot
 If you hit this, uninstall the conflicting package and restart n8n.
 
 Example report: https://github.com/Automations-Project/n8n-nodes-cloudflare/issues/2
+
+## 🤖 RAG Workflows (Vector Search)
+
+The **Cloudflare Vectorize** node includes a built-in **RAG (Embed + Store)** resource that combines Workers AI embeddings with Vectorize storage in a single operation:
+
+- **Insert Documents**: Text → Embeddings → Vector Storage
+- **Search Documents**: Query → Embedding → Similarity Search
+
+📖 See [docs/RAG-WORKFLOW-GUIDE.md](docs/RAG-WORKFLOW-GUIDE.md) for complete workflow examples.
+
+> **Note:** Native LangChain cluster node integration (Document Loader, AI Agent tool connectors) requires n8n core support and is not available in community nodes. See the documentation for details and how to request this feature from n8n.
 
 ## 📋 Requirements
 
