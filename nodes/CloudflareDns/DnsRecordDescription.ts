@@ -82,7 +82,8 @@ export const dnsRecordFields: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'The DNS Record ID',
+		placeholder: 'e.g., 372e67954025e0ba6aaa6d586b9e0b59',
+		description: 'The unique identifier for the DNS record. Found in the DNS record details.',
 		displayOptions: {
 			show: {
 				resource: ['dnsRecord'],
@@ -316,7 +317,8 @@ export const dnsRecordFields: INodeProperties[] = [
 				name: 'name',
 				type: 'string',
 				default: '',
-				description: 'Filter by record name (exact match)',
+				placeholder: 'subdomain.example.com',
+				description: 'Filter by record name. Use the full subdomain (e.g., www.example.com).',
 			},
 			{
 				displayName: 'Type',
@@ -340,7 +342,8 @@ export const dnsRecordFields: INodeProperties[] = [
 				name: 'content',
 				type: 'string',
 				default: '',
-				description: 'Filter by record content (exact match)',
+				placeholder: '192.0.2.1',
+				description: 'Filter by record content/value. For A records, use an IP address.',
 			},
 			{
 				displayName: 'Proxied',

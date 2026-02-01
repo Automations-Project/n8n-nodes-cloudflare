@@ -7,6 +7,8 @@ import {
 	JsonObject,
 	IHttpRequestOptions,
 	ILoadOptionsFunctions,
+	IPollFunctions,
+	IHookFunctions,
 } from 'n8n-workflow';
 
 /**
@@ -94,7 +96,7 @@ export function handleCloudflareApiError(
  * Make an API request to Cloudflare with enhanced error handling
  */
 export async function cloudflareApiRequest(
-	this: IExecuteFunctions | ILoadOptionsFunctions,
+	this: IExecuteFunctions | ILoadOptionsFunctions | IPollFunctions | IHookFunctions,
 	method: IHttpRequestMethods,
 	endpoint: string,
 	body: IDataObject = {},

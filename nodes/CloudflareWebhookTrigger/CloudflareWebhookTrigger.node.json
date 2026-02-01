@@ -1,16 +1,16 @@
 {
-	"node": "n8n-nodes-cloudflare.cloudflareTrigger",
+	"node": "n8n-nodes-cloudflare.cloudflareWebhookTrigger",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["Development"],
 	"subcategories": {
 		"Development": ["Monitoring"]
 	},
-	"alias": ["cloudflare", "trigger", "dns", "zone", "worker", "audit", "poll", "monitor"],
+	"alias": ["cloudflare", "webhook", "trigger", "stream", "video", "live", "notification"],
 	"resources": {
 		"primaryDocumentation": [
 			{
-				"url": "https://developers.cloudflare.com/api/"
+				"url": "https://developers.cloudflare.com/stream/manage-video-library/using-webhooks/"
 			}
 		],
 		"credentialDocumentation": [

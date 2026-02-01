@@ -100,7 +100,8 @@ export const workersScriptFields: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'Name of the Worker script to upload/deploy',
+		placeholder: 'my-worker-script',
+		description: 'Name of the Worker script to upload/deploy. Use lowercase letters, numbers, and hyphens.',
 		displayOptions: {
 			show: {
 				resource: ['script'],

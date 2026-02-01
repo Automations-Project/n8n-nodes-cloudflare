@@ -99,6 +99,8 @@
 			"dist/credentials/CloudflareApi.credentials.js"
 		],
 		"nodes": [
+			"dist/nodes/CloudflareTrigger/CloudflareTrigger.node.js",
+			"dist/nodes/CloudflareWebhookTrigger/CloudflareWebhookTrigger.node.js",
 			"dist/nodes/CloudflareDns/CloudflareDns.node.js",
 			"dist/nodes/CloudflareWorkers/CloudflareWorkers.node.js",
 			"dist/nodes/CloudflareR2/CloudflareR2.node.js",
