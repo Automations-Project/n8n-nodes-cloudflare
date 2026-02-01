@@ -1,0 +1,22 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareR2",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Data & Storage", "Development"],
+	"subcategories": {
+		"Data & Storage": ["Object Storage"]
+	},
+	"alias": ["r2", "storage", "bucket", "s3", "object", "cloudflare", "file", "blob"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/Automations-Project/n8n-nodes-cloudflare"
+			}
+		]
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareStream",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Miscellaneous", "Development"],
+	"subcategories": {
+		"Miscellaneous": ["Media", "Video"]
+	},
+	"alias": ["stream", "video", "media", "cloudflare", "upload", "transcode"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/Automations-Project/n8n-nodes-cloudflare"
+			}
+		]
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareDurableObjects",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Data & Storage", "Development"],
+	"subcategories": {
+		"Data & Storage": ["Stateful Storage"]
+	},
+	"alias": ["durable-objects", "state", "stateful", "cloudflare", "actor", "coordination"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/Automations-Project/n8n-nodes-cloudflare"
+			}
+		]
+	}
+}

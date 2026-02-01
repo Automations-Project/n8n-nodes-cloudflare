@@ -144,13 +144,46 @@ The **Cloudflare Vectorize** node includes a built-in **RAG (Embed + Store)** re
 - **Node.js** >= 18.17.0
 - **Cloudflare Account** with API access
 
+## 🛠️ Development
+
+### Testing
+
+```bash
+# Run all tests
+npm test
+
+# Watch mode
+npm run test:watch
+
+# Coverage report
+npm run test:coverage
+```
+
+**Test Structure:**
+
+- `nodes/shared/GenericFunctions.test.ts` - Utility functions
+- `credentials/CloudflareApi.credentials.test.ts` - Credential validation
+- `nodes/CloudflareDns/CloudflareDns.test.ts` - Node structure template
+
+### Building
+
+```bash
+npm run build        # Build for production
+npm run dev          # Watch mode for development
+npm run lint         # Run ESLint
+npm run format       # Format with Prettier
+```
+
 ## 🤝 Contributing
 
 Contributions welcome! Please:
 
 1. Fork the repository
 2. Create a feature branch
-3. Submit a Pull Request
+3. **Run tests**: `npm test`
+4. Submit a Pull Request
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## 🐛 Issues
 

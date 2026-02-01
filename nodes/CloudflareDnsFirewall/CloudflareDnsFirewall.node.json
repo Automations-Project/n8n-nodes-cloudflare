@@ -1,0 +1,12 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareDnsFirewall",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Miscellaneous", "Development"],
+	"subcategories": { "Miscellaneous": ["Security", "DNS"] },
+	"alias": ["dns-firewall", "dns", "security", "cloudflare", "resolver"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/" }],
+		"primaryDocumentation": [{ "url": "https://github.com/Automations-Project/n8n-nodes-cloudflare" }]
+	}
+}

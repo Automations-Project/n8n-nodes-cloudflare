@@ -1,0 +1,12 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareManagedHeaders",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Development", "Miscellaneous"],
+	"subcategories": { "Development": ["HTTP Headers"] },
+	"alias": ["managed-headers", "headers", "http", "cloudflare"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/" }],
+		"primaryDocumentation": [{ "url": "https://github.com/Automations-Project/n8n-nodes-cloudflare" }]
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareBotnetFeed",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Miscellaneous", "Development"],
+	"subcategories": { "Miscellaneous": ["Security", "Threat Intelligence"] },
+	"alias": ["botnet-feed", "botnet", "threat", "cloudflare"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/" }],
+		"primaryDocumentation": [{ "url": "https://github.com/Automations-Project/n8n-nodes-cloudflare" }]
+	}
+}

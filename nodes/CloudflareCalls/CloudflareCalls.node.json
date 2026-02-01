@@ -1,0 +1,22 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareCalls",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Communication", "Development"],
+	"subcategories": {
+		"Communication": ["Video Conferencing"]
+	},
+	"alias": ["calls", "video", "webrtc", "cloudflare", "conference", "turn"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/Automations-Project/n8n-nodes-cloudflare"
+			}
+		]
+	}
+}

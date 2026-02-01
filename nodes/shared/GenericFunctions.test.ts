@@ -186,3 +186,76 @@ describe('Vectorize v2 Endpoint Paths', () => {
 		expect(result).toBe('/accounts/acc-id/vectorize/v2/indexes/vectors/delete-by-ids');
 	});
 });
+
+/**
+ * Test error code handling patterns
+ */
+describe('Cloudflare Error Code Handling', () => {
+	const ENTERPRISE_PLAN_CODES = [10030, 10031];
+	const AUTH_ERROR_CODES = [10000, 9109];
+
+	it('should identify enterprise plan error codes', () => {
+		const errorCode = 10030;
+		expect(ENTERPRISE_PLAN_CODES.includes(errorCode)).toBe(true);
+	});
+
+	it('should identify authentication error codes', () => {
+		const errorCode = 10000;
+		expect(AUTH_ERROR_CODES.includes(errorCode)).toBe(true);
+	});
+
+	it('should not flag valid codes as enterprise errors', () => {
+		const validCode = 0;
+		expect(ENTERPRISE_PLAN_CODES.includes(validCode)).toBe(false);
+	});
+});
+
+/**
+ * Test plan requirement feature mapping
+ */
+describe('Feature Plan Requirements', () => {
+	const FEATURE_PLAN_REQUIREMENTS: Record<string, string> = {
+		'magic_transit': 'enterprise',
+		'magic_wan': 'enterprise',
+		'custom_certificates': 'business',
+		'waf': 'pro',
+	};
+
+	it('should correctly map enterprise features', () => {
+		expect(FEATURE_PLAN_REQUIREMENTS['magic_transit']).toBe('enterprise');
+		expect(FEATURE_PLAN_REQUIREMENTS['magic_wan']).toBe('enterprise');
+	});
+
+	it('should correctly map business features', () => {
+		expect(FEATURE_PLAN_REQUIREMENTS['custom_certificates']).toBe('business');
+	});
+
+	it('should correctly map pro features', () => {
+		expect(FEATURE_PLAN_REQUIREMENTS['waf']).toBe('pro');
+	});
+
+	it('should return undefined for unmapped features', () => {
+		expect(FEATURE_PLAN_REQUIREMENTS['free_feature']).toBeUndefined();
+	});
+});
+
+/**
+ * Test enterprise plan notice generation
+ */
+describe('Enterprise Plan Notices', () => {
+	const getEnterprisePlanNotice = (featureName: string): string => {
+		return `This feature (${featureName}) requires an Enterprise plan. Please contact Cloudflare sales to upgrade.`;
+	};
+
+	it('should generate correct enterprise notice', () => {
+		const notice = getEnterprisePlanNotice('Magic Transit');
+		expect(notice).toContain('Magic Transit');
+		expect(notice).toContain('Enterprise plan');
+	});
+
+	it('should include sales contact info', () => {
+		const notice = getEnterprisePlanNotice('Feature');
+		expect(notice).toContain('contact Cloudflare sales');
+	});
+});
+

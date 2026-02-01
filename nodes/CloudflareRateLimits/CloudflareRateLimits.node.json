@@ -1,0 +1,12 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareRateLimits",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Miscellaneous", "Development"],
+	"subcategories": { "Miscellaneous": ["Security", "Rate Limiting"] },
+	"alias": ["rate-limits", "throttle", "security", "cloudflare", "ddos"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/" }],
+		"primaryDocumentation": [{ "url": "https://github.com/Automations-Project/n8n-nodes-cloudflare" }]
+	}
+}

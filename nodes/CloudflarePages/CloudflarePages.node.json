@@ -1,0 +1,22 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflarePages",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Development", "Miscellaneous"],
+	"subcategories": {
+		"Development": ["Hosting", "Deployment"]
+	},
+	"alias": ["pages", "hosting", "deploy", "website", "cloudflare", "static", "jamstack"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/Automations-Project/n8n-nodes-cloudflare"
+			}
+		]
+	}
+}

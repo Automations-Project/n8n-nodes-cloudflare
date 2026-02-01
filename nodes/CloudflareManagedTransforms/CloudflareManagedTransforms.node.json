@@ -1,0 +1,12 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareManagedTransforms",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Development", "Miscellaneous"],
+	"subcategories": { "Development": ["Request Transformation"] },
+	"alias": ["managed-transforms", "transform", "request", "cloudflare", "headers"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/" }],
+		"primaryDocumentation": [{ "url": "https://github.com/Automations-Project/n8n-nodes-cloudflare" }]
+	}
+}

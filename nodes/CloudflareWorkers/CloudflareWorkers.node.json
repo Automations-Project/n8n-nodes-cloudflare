@@ -1,0 +1,22 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareWorkers",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Development", "Miscellaneous"],
+	"subcategories": {
+		"Development": ["Serverless", "Edge Computing"]
+	},
+	"alias": ["workers", "serverless", "edge", "cloudflare", "script", "function", "lambda"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/Automations-Project/n8n-nodes-cloudflare"
+			}
+		]
+	}
+}

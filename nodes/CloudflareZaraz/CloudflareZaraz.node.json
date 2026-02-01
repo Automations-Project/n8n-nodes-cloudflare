@@ -1,0 +1,12 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareZaraz",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Analytics", "Development"],
+	"subcategories": { "Analytics": ["Tag Management"] },
+	"alias": ["zaraz", "analytics", "tag-manager", "cloudflare", "tracking"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/" }],
+		"primaryDocumentation": [{ "url": "https://github.com/Automations-Project/n8n-nodes-cloudflare" }]
+	}
+}

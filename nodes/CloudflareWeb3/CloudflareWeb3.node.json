@@ -1,0 +1,14 @@
+{
+	"node": "n8n-nodes-cloudflare.cloudflareWeb3",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Miscellaneous", "Development"],
+	"subcategories": {
+		"Miscellaneous": ["Web3", "IPFS"]
+	},
+	"alias": ["web3", "ipfs", "ethereum", "gateway", "cloudflare", "blockchain"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/" }],
+		"primaryDocumentation": [{ "url": "https://github.com/Automations-Project/n8n-nodes-cloudflare" }]
+	}
+}
