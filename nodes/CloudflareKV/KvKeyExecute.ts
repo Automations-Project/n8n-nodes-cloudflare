@@ -2,8 +2,13 @@ import {
 	IExecuteFunctions,
 	INodeExecutionData,
 	IDataObject,
+	NodeOperationError,
 } from 'n8n-workflow';
-import { cloudflareApiRequest, cloudflareApiRequestAllItems } from '../shared/GenericFunctions';
+import {
+	cloudflareApiRequest,
+	cloudflareApiRequestAllItems,
+	cloudflareApiRequestRaw,
+} from '../shared/GenericFunctions';
 
 export async function kvKeyExecute(
 	this: IExecuteFunctions,
@@ -76,13 +81,26 @@ export async function kvKeyExecute(
 		if (writeOptions.expiration_ttl && writeOptions.expiration_ttl > 0) {
 			qs.expiration_ttl = writeOptions.expiration_ttl;
 		}
+		if (writeOptions.metadata) {
+			try {
+				JSON.parse(writeOptions.metadata);
+			} catch {
+				throw new NodeOperationError(
+					this.getNode(),
+					'Metadata must be valid JSON',
+					{ itemIndex },
+				);
+			}
+			qs.metadata = writeOptions.metadata;
+		}
 
-		// For simple write, we send value as the body
-		await cloudflareApiRequest.call(
+		await cloudflareApiRequestRaw.call(
 			this,
 			'PUT',
 			`/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/values/${encodeURIComponent(keyName)}`,
-			{ value },
+			Buffer.from(value, 'utf-8'),
+			{ 'Content-Type': 'text/plain; charset=utf-8' },
+			itemIndex,
 			qs,
 		);
 

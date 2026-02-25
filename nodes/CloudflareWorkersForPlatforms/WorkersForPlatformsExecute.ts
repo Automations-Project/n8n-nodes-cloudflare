@@ -1,4 +1,10 @@
-import { IExecuteFunctions, IDataObject, INodeExecutionData } from 'n8n-workflow';
+import {
+	IExecuteFunctions,
+	IDataObject,
+	INodeExecutionData,
+	JsonObject,
+	NodeApiError,
+} from 'n8n-workflow';
 import { cloudflareApiRequest, cloudflareApiRequestAllItems } from '../shared/GenericFunctions';
 
 export async function workersForPlatformsExecute(
@@ -33,9 +39,10 @@ export async function workersForPlatformsExecute(
 		}
 	}
 
-	if (resource === 'script') {
+	if (resource === 'script' || resource === 'dispatchScript') {
 		const dispatchNamespace = this.getNodeParameter('dispatchNamespace', index) as string;
-		const basePath = `/accounts/${accountId}/workers/dispatch/namespaces/${dispatchNamespace}/scripts`;
+		const encodedNamespace = encodeURIComponent(dispatchNamespace);
+		const basePath = `/accounts/${accountId}/workers/dispatch/namespaces/${encodedNamespace}/scripts`;
 
 		if (operation === 'getMany') {
 			const response = await cloudflareApiRequestAllItems.call(this, 'GET', basePath);
@@ -53,8 +60,64 @@ export async function workersForPlatformsExecute(
 		}
 		if (operation === 'upload') {
 			const scriptName = this.getNodeParameter('scriptName', index) as string;
-			const response = await cloudflareApiRequest.call(this, 'PUT', `${basePath}/${scriptName}`, {});
-			return [{ json: response as IDataObject }];
+			const scriptContent = this.getNodeParameter('scriptContent', index) as string;
+			const uploadOptions = this.getNodeParameter('uploadOptions', index) as {
+				compatibilityDate?: string;
+				moduleType?: string;
+			};
+			const moduleType = uploadOptions.moduleType === 'sw' ? 'sw' : 'esm';
+			const metadata: IDataObject = {};
+			if (moduleType === 'sw') {
+				metadata.body_part = 'worker.js';
+			} else {
+				metadata.main_module = 'worker.js';
+			}
+			if (uploadOptions.compatibilityDate) {
+				metadata.compatibility_date = uploadOptions.compatibilityDate;
+			}
+
+			const options = {
+				method: 'PUT' as const,
+				url: `https://api.cloudflare.com/client/v4${basePath}/${encodeURIComponent(scriptName)}`,
+				formData: {
+					metadata: {
+						value: Buffer.from(JSON.stringify(metadata), 'utf-8'),
+						options: {
+							filename: 'metadata.json',
+							contentType: 'application/json',
+						},
+					},
+					files: {
+						value: Buffer.from(scriptContent, 'utf-8'),
+						options: {
+							filename: 'worker.js',
+							contentType: moduleType === 'sw' ? 'application/javascript' : 'application/javascript+module',
+						},
+					},
+				},
+				json: true,
+			};
+
+			try {
+				const response = await this.helpers.httpRequestWithAuthentication.call(
+					this,
+					'cloudflareApi',
+					options,
+				);
+
+				if (response.success === false) {
+					throw new NodeApiError(this.getNode(), response as JsonObject, {
+						message: response.errors?.[0]?.message || 'Unknown error',
+					});
+				}
+
+				return [{ json: ((response.result as IDataObject) ?? (response as IDataObject)) }];
+			} catch (error) {
+				if (error instanceof NodeApiError) {
+					throw error;
+				}
+				throw new NodeApiError(this.getNode(), error as JsonObject);
+			}
 		}
 	}
 

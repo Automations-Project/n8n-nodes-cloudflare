@@ -3,7 +3,11 @@ import {
 	INodeExecutionData,
 	IDataObject,
 } from 'n8n-workflow';
-import { cloudflareApiRequest, cloudflareApiRequestAllItems } from '../shared/GenericFunctions';
+import {
+	cloudflareApiRequest,
+	cloudflareApiRequestAllItems,
+	cloudflareApiRequestRaw,
+} from '../shared/GenericFunctions';
 
 export async function r2ObjectExecute(
 	this: IExecuteFunctions,
@@ -84,6 +88,7 @@ export async function r2ObjectExecute(
 		};
 
 		let content: string | Buffer;
+		let detectedBinaryContentType: string | undefined;
 
 		if (contentSource === 'text') {
 			let rawContent = this.getNodeParameter('content', itemIndex) as string;
@@ -106,28 +111,34 @@ export async function r2ObjectExecute(
 			content = rawContent;
 		} else {
 			const binaryPropertyName = this.getNodeParameter('binaryPropertyName', itemIndex) as string;
+			const binaryData = this.helpers.assertBinaryData(itemIndex, binaryPropertyName);
 			content = await this.helpers.getBinaryDataBuffer(itemIndex, binaryPropertyName);
+			if (binaryData.mimeType?.trim()) {
+				detectedBinaryContentType = binaryData.mimeType;
+			}
 		}
 
-		// Note: R2 API for object upload may require S3-compatible endpoint
-		// This is a simplified version using the Cloudflare API
-		const body: IDataObject = {
-			key: objectKey,
-			body: content.toString('base64'),
-		};
-
+		const uploadHeaders: IDataObject = {};
 		if (uploadOptions.contentType) {
-			body.contentType = uploadOptions.contentType;
+			uploadHeaders['Content-Type'] = uploadOptions.contentType;
+		} else if (contentSource === 'binary') {
+			uploadHeaders['Content-Type'] = detectedBinaryContentType ?? 'application/octet-stream';
+		} else {
+			uploadHeaders['Content-Type'] = 'text/plain; charset=utf-8';
 		}
 		if (uploadOptions.cacheControl) {
-			body.cacheControl = uploadOptions.cacheControl;
+			uploadHeaders['Cache-Control'] = uploadOptions.cacheControl;
 		}
 
-		responseData = await cloudflareApiRequest.call(
+		const rawBody = typeof content === 'string' ? Buffer.from(content, 'utf-8') : content;
+
+		responseData = await cloudflareApiRequestRaw.call(
 			this,
 			'PUT',
 			`/accounts/${accountId}/r2/buckets/${bucketName}/objects/${encodeURIComponent(objectKey)}`,
-			body,
+			rawBody,
+			uploadHeaders,
+			itemIndex,
 		);
 
 		if (!responseData) {

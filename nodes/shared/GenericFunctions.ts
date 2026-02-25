@@ -232,6 +232,165 @@ export async function cloudflareApiRequest(
 }
 
 /**
+ * Make an API request to Cloudflare with a raw request body.
+ * Used by endpoints like R2 object upload that expect bytes instead of JSON payloads.
+ */
+export async function cloudflareApiRequestRaw(
+	this: IExecuteFunctions,
+	method: IHttpRequestMethods,
+	endpoint: string,
+	rawBody: Buffer | string,
+	headers: IDataObject = {},
+	itemIndex?: number,
+	qs: IDataObject = {},
+): Promise<IDataObject> {
+	const options: IHttpRequestOptions = {
+		method,
+		url: `https://api.cloudflare.com/client/v4${endpoint}`,
+		body: rawBody,
+		json: false,
+		returnFullResponse: false,
+	};
+
+	if (Object.keys(headers).length > 0) {
+		options.headers = headers;
+	}
+	if (Object.keys(qs).length > 0) {
+		options.qs = qs;
+	}
+
+	try {
+		const responseValue = await this.helpers.httpRequestWithAuthentication.call(
+			this,
+			'cloudflareApi',
+			options,
+		);
+
+		let response: IDataObject;
+		if (typeof responseValue === 'string') {
+			// Cloudflare v4 endpoints usually return JSON; treat non-JSON as empty success payload.
+			try {
+				response = JSON.parse(responseValue);
+			} catch {
+				return {};
+			}
+		} else if (typeof responseValue === 'object' && responseValue !== null) {
+			response = responseValue as IDataObject;
+		} else {
+			return {};
+		}
+
+		if (response.success === false) {
+			const errors = response.errors as Array<{ message?: string; code?: number }> | undefined;
+			const errorMessage = errors?.[0]?.message || 'Unknown error';
+			const errorCode = errors?.[0]?.code;
+			const allErrors = errors?.map((e) => e.message).filter(Boolean).join('; ');
+
+			throw new NodeApiError(this.getNode(), response as JsonObject, {
+				message: errorMessage,
+				description:
+					allErrors !== errorMessage
+						? allErrors
+						: (errorCode ? `Error code: ${errorCode}` : undefined),
+				itemIndex,
+			});
+		}
+
+		if (response.result && typeof response.result === 'object') {
+			return response.result as IDataObject;
+		}
+
+		return response;
+	} catch (error) {
+		if (error instanceof NodeApiError || error instanceof NodeOperationError) {
+			throw error;
+		}
+
+		// Extract detailed error info from HTTP errors
+		// n8n wraps HTTP errors with various structures depending on the error type
+		const err = error as {
+			statusCode?: number;
+			message?: string;
+			cause?: {
+				error?: { errors?: Array<{ message?: string; code?: number }> };
+				response?: { body?: unknown };
+			};
+			response?: { body?: string | { errors?: Array<{ message?: string; code?: number }> } };
+			httpCode?: string;
+			description?: string;
+			error?: { errors?: Array<{ message?: string; code?: number }> };
+		};
+
+		// Try to extract Cloudflare error details from various error structures
+		// n8n can wrap errors in different ways depending on the HTTP client used
+		let cfErrors: Array<{ message?: string; code?: number }> | undefined;
+
+		// Check direct error.error.errors (common in n8n HTTP responses)
+		if (err.error?.errors) {
+			cfErrors = err.error.errors;
+		}
+		// Check cause.error.errors
+		else if (err.cause?.error?.errors) {
+			cfErrors = err.cause.error.errors;
+		}
+		// Check cause.response.body (axios-style)
+		else if (err.cause?.response?.body) {
+			const body = err.cause.response.body;
+			if (typeof body === 'object' && body !== null && 'errors' in body) {
+				cfErrors = (body as { errors: Array<{ message?: string; code?: number }> }).errors;
+			}
+		}
+		// Check response.body object
+		else if (err.response?.body && typeof err.response.body === 'object') {
+			cfErrors = err.response.body.errors;
+		}
+		// Check response.body string (needs parsing)
+		else if (err.response?.body && typeof err.response.body === 'string') {
+			try {
+				const parsed = JSON.parse(err.response.body);
+				cfErrors = parsed.errors;
+			} catch {
+				// Ignore parse errors
+			}
+		}
+
+		const cfErrorMessage = cfErrors?.[0]?.message;
+		const cfErrorCode = cfErrors?.[0]?.code;
+		const httpCode = err.httpCode || (err.statusCode ? String(err.statusCode) : undefined);
+
+		// Build descriptive error message
+		const allErrors = cfErrors?.map((e) => e.message).filter(Boolean).join('; ');
+
+		if (err.statusCode === 403) {
+			throw new NodeApiError(this.getNode(), error as JsonObject, {
+				message: cfErrorMessage || 'Access denied',
+				description: 'This feature may require a higher Cloudflare plan or additional permissions.',
+				httpCode,
+				itemIndex,
+			});
+		}
+
+		if (cfErrorMessage) {
+			throw new NodeApiError(this.getNode(), error as JsonObject, {
+				message: cfErrorMessage,
+				description:
+					allErrors !== cfErrorMessage
+						? allErrors
+						: (cfErrorCode ? `Error code: ${cfErrorCode}` : undefined),
+				httpCode,
+				itemIndex,
+			});
+		}
+
+		throw new NodeApiError(this.getNode(), error as JsonObject, {
+			message: err.message || 'Cloudflare raw request failed',
+			httpCode,
+			itemIndex,
+		});
+	}
+}
+
+/**
  * Make an API request to Cloudflare with NDJSON body format
  * Used for Vectorize insert/upsert operations that require application/x-ndjson
  * Cloudflare expects multipart form-data with a 'body' field containing the NDJSON

@@ -2,6 +2,8 @@ import {
 	IExecuteFunctions,
 	INodeExecutionData,
 	IDataObject,
+	JsonObject,
+	NodeApiError,
 } from 'n8n-workflow';
 import { cloudflareApiRequest, cloudflareApiRequestAllItems } from '../shared/GenericFunctions';
 
@@ -66,29 +68,60 @@ export async function workersScriptExecute(
 			moduleType?: string;
 		};
 
-		// Workers upload requires multipart/form-data with metadata
-		// For simplicity, we'll use the simple script upload endpoint
-		const metadata: IDataObject = {
-			main_module: 'worker.js',
-		};
+		const moduleType = uploadOptions.moduleType === 'sw' ? 'sw' : 'esm';
+		const metadata: IDataObject = {};
+		if (moduleType === 'sw') {
+			metadata.body_part = 'worker.js';
+		} else {
+			metadata.main_module = 'worker.js';
+		}
 
 		if (uploadOptions.compatibilityDate) {
 			metadata.compatibility_date = uploadOptions.compatibilityDate;
 		}
 
-		// Note: Full multipart upload would require FormData
-		// This simplified version uses the script content directly
-		const body: IDataObject = {
-			script: scriptContent,
-			metadata,
+		const options = {
+			method: 'PUT' as const,
+			url: `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${encodeURIComponent(scriptName)}`,
+			formData: {
+				metadata: {
+					value: Buffer.from(JSON.stringify(metadata), 'utf-8'),
+					options: {
+						filename: 'metadata.json',
+						contentType: 'application/json',
+					},
+				},
+				files: {
+					value: Buffer.from(scriptContent, 'utf-8'),
+					options: {
+						filename: 'worker.js',
+						contentType: moduleType === 'sw' ? 'application/javascript' : 'application/javascript+module',
+					},
+				},
+			},
+			json: true,
 		};
 
-		responseData = await cloudflareApiRequest.call(
-			this,
-			'PUT',
-			`/accounts/${accountId}/workers/scripts/${scriptName}`,
-			body,
-		);
+		try {
+			const response = await this.helpers.httpRequestWithAuthentication.call(
+				this,
+				'cloudflareApi',
+				options,
+			);
+
+			if (response.success === false) {
+				throw new NodeApiError(this.getNode(), response as JsonObject, {
+					message: response.errors?.[0]?.message || 'Unknown error',
+				});
+			}
+
+			responseData = (response.result as IDataObject) ?? (response as IDataObject);
+		} catch (error) {
+			if (error instanceof NodeApiError) {
+				throw error;
+			}
+			throw new NodeApiError(this.getNode(), error as JsonObject);
+		}
 	}
 
 	if (operation === 'getContent') {

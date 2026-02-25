@@ -1,7 +1,21 @@
 {
-  "totalEndpoints": 403,
-  "duplicateEndpoints": 4,
+  "totalEndpoints": 619,
+  "duplicateEndpoints": 11,
   "duplicates": [
+    {
+      "endpoint": "POST /accounts/{id}/alerting/v3/policies",
+      "implementedIn": [
+        "CloudflareAlerting",
+        "CloudflareEventNotifications"
+      ]
+    },
+    {
+      "endpoint": "GET /accounts/{id}/alerting/v3/policies",
+      "implementedIn": [
+        "CloudflareAlerting",
+        "CloudflareEventNotifications"
+      ]
+    },
     {
       "endpoint": "POST /zones/{id}/purge_cache",
       "implementedIn": [
@@ -10,88 +24,198 @@
       ]
     },
     {
-      "endpoint": "PUT {id}",
+      "endpoint": "GET {id}",
       "implementedIn": [
+        "CloudflareImages",
+        "CloudflareIntel",
         "CloudflareLogpush",
-        "CloudflareRulesets"
+        "CloudflareMagicCloud",
+        "CloudflarePages",
+        "CloudflareQueues",
+        "CloudflareRulesets",
+        "CloudflareWorkers",
+        "CloudflareWorkersForPlatforms",
+        "CloudflareZeroTrust"
+      ]
+    },
+    {
+      "endpoint": "PATCH {id}",
+      "implementedIn": [
+        "CloudflareImages",
+        "CloudflareMagicCloud"
       ]
     },
     {
       "endpoint": "DELETE {id}",
       "implementedIn": [
+        "CloudflareImages",
+        "CloudflareIntel",
         "CloudflareLogpush",
-        "CloudflareRulesets"
+        "CloudflareMagicCloud",
+        "CloudflarePages",
+        "CloudflareQueues",
+        "CloudflareRulesets",
+        "CloudflareWorkers",
+        "CloudflareWorkersForPlatforms",
+        "CloudflareZeroTrust"
       ]
     },
     {
-      "endpoint": "GET {id}",
+      "endpoint": "PUT {id}",
       "implementedIn": [
+        "CloudflareIntel",
         "CloudflareLogpush",
-        "CloudflareRulesets"
+        "CloudflareQueues",
+        "CloudflareRulesets",
+        "CloudflareWorkers",
+        "CloudflareWorkersForPlatforms",
+        "CloudflareZeroTrust"
+      ]
+    },
+    {
+      "endpoint": "GET /user/tokens/{id}",
+      "implementedIn": [
+        "CloudflareTokens",
+        "CloudflareUser"
+      ]
+    },
+    {
+      "endpoint": "PUT /user/tokens/{id}",
+      "implementedIn": [
+        "CloudflareTokens",
+        "CloudflareUser"
+      ]
+    },
+    {
+      "endpoint": "DELETE /user/tokens/{id}",
+      "implementedIn": [
+        "CloudflareTokens",
+        "CloudflareUser"
+      ]
+    },
+    {
+      "endpoint": "POST /accounts/{id}/ai/run/{id}",
+      "implementedIn": [
+        "CloudflareVectorize",
+        "CloudflareWorkersAI"
       ]
     }
   ],
   "nodeOperationCounts": {
+    "CloudflareAbuseReports": 1,
     "CloudflareAccounts": 13,
+    "CloudflareAddressMaps": 5,
     "CloudflareAIGateway": 7,
     "CloudflareAlerting": 6,
+    "CloudflareEventNotifications": 9,
+    "CloudflareApiGateway": 8,
     "CloudflareArgo": 4,
     "CloudflareAuditLogs": 1,
+    "CloudflareBilling": 1,
     "CloudflareBotManagement": 2,
+    "CloudflareBotnetFeed": 3,
+    "CloudflareBrandProtection": 4,
+    "CloudflareBrowserRendering": 4,
     "CloudflareCache": 13,
     "CloudflareZones": 10,
     "CloudflareCalls": 9,
+    "CloudflareCertificateAuthorities": 2,
     "CloudflareClientCertificates": 5,
+    "CloudflareCloudConnector": 2,
+    "CloudflareCloudforceOne": 4,
+    "CloudflareCni": 2,
+    "CloudflareContentUploadScan": 4,
     "CloudflareCustomCertificates": 6,
     "CloudflareCustomHostnames": 8,
     "CloudflareCustomNameservers": 6,
+    "CloudflareCustomPages": 3,
     "CloudflareD1": 9,
+    "CloudflareDcvDelegation": 1,
+    "CloudflareDevices": 6,
+    "CloudflareDex": 2,
     "CloudflareDiagnostics": 1,
-    "CloudflareDns": 13,
+    "CloudflareDlp": 8,
+    "CloudflareDns": 15,
+    "CloudflareDnsAnalytics": 2,
     "CloudflareDnsFirewall": 5,
     "CloudflareDurableObjects": 2,
     "CloudflareEmailRouting": 15,
     "CloudflareEmailSecurity": 7,
+    "CloudflareEventSubscriptions": 5,
     "CloudflareFilters": 5,
     "CloudflareFirewall": 15,
     "CloudflareHealthchecks": 5,
+    "CloudflareHostnameSettings": 3,
     "CloudflareHyperdrive": 5,
-    "CloudflareImages": 5,
-    "CloudflareIntel": 8,
+    "CloudflareIam": 6,
+    "CloudflareImages": 9,
+    "CloudflareIntel": 13,
+    "CloudflareLogpush": 6,
+    "CloudflareMagicCloud": 3,
+    "CloudflarePages": 12,
+    "CloudflareQueues": 12,
+    "CloudflareRulesets": 10,
+    "CloudflareWorkers": 12,
+    "CloudflareWorkersForPlatforms": 3,
+    "CloudflareZeroTrust": 10,
+    "CloudflareInfrastructure": 5,
+    "CloudflareInvites": 2,
+    "CloudflareIPs": 1,
     "CloudflareKeylessSsl": 5,
-    "CloudflareKV": 10,
-    "CloudflareLoadBalancer": 19,
-    "CloudflareLogpush": 3,
-    "CloudflareRulesets": 3,
-    "CloudflareMagicTransit": 10,
-    "CloudflareMagicWan": 10,
+    "CloudflareKV": 11,
+    "CloudflareLeakedCredentialChecks": 3,
+    "CloudflareLists": 8,
+    "CloudflareLoadBalancer": 23,
+    "CloudflareManagedHeaders": 2,
+    "CloudflareMemberships": 4,
+    "CloudflareMnm": 5,
     "CloudflareMtlsCertificates": 5,
+    "CloudflareOrganizations": 2,
     "CloudflareOriginCa": 2,
     "CloudflareOriginTlsClientAuth": 6,
     "CloudflarePageRules": 5,
-    "CloudflarePages": 10,
-    "CloudflareQueues": 9,
-    "CloudflareR2": 8,
+    "CloudflarePageShield": 9,
+    "CloudflarePcaps": 4,
+    "CloudflarePipelines": 5,
+    "CloudflarePrefixes": 5,
+    "CloudflareR2": 7,
+    "CloudflareRadar": 4,
     "CloudflareRateLimits": 5,
+    "CloudflareRatePlans": 1,
     "CloudflareRegistrar": 3,
+    "CloudflareRequestTracer": 1,
+    "CloudflareRum": 6,
+    "CloudflareSchemaValidation": 6,
+    "CloudflareSecondaryDns": 7,
+    "CloudflareSecretsStore": 7,
+    "CloudflareSecurityCenter": 1,
     "CloudflareSecurityTxt": 3,
+    "CloudflareShares": 5,
     "CloudflareSnippets": 7,
     "CloudflareSpectrum": 5,
     "CloudflareSpeed": 4,
     "CloudflareSSL": 9,
     "CloudflareStream": 7,
+    "CloudflareSubnets": 4,
+    "CloudflareSuperSlurper": 4,
+    "CloudflareTeamnet": 5,
+    "CloudflareTokens": 8,
+    "CloudflareUser": 4,
     "CloudflareTotalTls": 2,
+    "CloudflareTunnels": 7,
     "CloudflareTurnstile": 6,
     "CloudflareUrlNormalization": 2,
     "CloudflareUrlScanner": 3,
-    "CloudflareUser": 4,
-    "CloudflareVectorize": 8,
-    "CloudflareWaitingRooms": 16,
-    "CloudflareWeb3": 5,
-    "CloudflareWorkers": 9,
+    "CloudflareVectorize": 9,
     "CloudflareWorkersAI": 3,
+    "CloudflareWaitingRooms": 16,
+    "CloudflareWarpConnector": 5,
+    "CloudflareWeb3": 5,
     "CloudflareWorkflows": 6,
     "CloudflareZaraz": 4,
-    "CloudflareZeroTrust": 8
+    "CloudflareZeroTrustConnectivity": 2,
+    "CloudflareZeroTrustRiskScoring": 4,
+    "CloudflareZoneSettings": 3,
+    "CloudflareZoneSubscription": 3
   }
 }

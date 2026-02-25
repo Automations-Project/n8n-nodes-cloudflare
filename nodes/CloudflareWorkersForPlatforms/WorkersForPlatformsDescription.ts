@@ -21,7 +21,7 @@ export const workersForPlatformsOperations: INodeProperties[] = [
 		name: 'operation',
 		type: 'options',
 		noDataExpression: true,
-		displayOptions: { show: { resource: ['script'] } },
+		displayOptions: { show: { resource: ['script', 'dispatchScript'] } },
 		options: [
 			{ name: 'Delete', value: 'delete', description: 'Delete a script', action: 'Delete script' },
 			{ name: 'Get', value: 'get', description: 'Get a script', action: 'Get script' },
@@ -33,7 +33,7 @@ export const workersForPlatformsOperations: INodeProperties[] = [
 ];
 
 export const workersForPlatformsFields: INodeProperties[] = [
-	{ ...accountIdField, displayOptions: { show: { resource: ['namespace', 'script'] } } },
+	{ ...accountIdField, displayOptions: { show: { resource: ['namespace', 'script', 'dispatchScript'] } } },
 	{
 		displayName: 'Namespace Name',
 		name: 'namespaceName',
@@ -48,7 +48,7 @@ export const workersForPlatformsFields: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		displayOptions: { show: { resource: ['script'] } },
+		displayOptions: { show: { resource: ['script', 'dispatchScript'] } },
 	},
 	{
 		displayName: 'Script Name',
@@ -56,6 +56,58 @@ export const workersForPlatformsFields: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		displayOptions: { show: { resource: ['script'], operation: ['get', 'delete', 'upload'] } },
+		displayOptions: { show: { resource: ['script', 'dispatchScript'], operation: ['get', 'delete', 'upload'] } },
+	},
+	{
+		displayName: 'Script Content',
+		name: 'scriptContent',
+		type: 'string',
+		typeOptions: {
+			rows: 10,
+		},
+		required: true,
+		default: '',
+		placeholder: 'export default { async fetch(request) { return new Response("Hello!"); } }',
+		description: 'JavaScript/TypeScript code for the dispatch Worker script',
+		displayOptions: {
+			show: {
+				resource: ['script', 'dispatchScript'],
+				operation: ['upload'],
+			},
+		},
+	},
+	{
+		displayName: 'Additional Options',
+		name: 'uploadOptions',
+		type: 'collection',
+		placeholder: 'Add Option',
+		default: {},
+		displayOptions: {
+			show: {
+				resource: ['script', 'dispatchScript'],
+				operation: ['upload'],
+			},
+		},
+		options: [
+			{
+				displayName: 'Compatibility Date',
+				name: 'compatibilityDate',
+				type: 'string',
+				default: '',
+				placeholder: '2024-01-01',
+				description: 'Compatibility date for the Worker runtime',
+			},
+			{
+				displayName: 'Module Type',
+				name: 'moduleType',
+				type: 'options',
+				options: [
+					{ name: 'ES Module', value: 'esm' },
+					{ name: 'Service Worker', value: 'sw' },
+				],
+				default: 'esm',
+				description: 'Type of Worker module format',
+			},
+		],
 	},
 ];

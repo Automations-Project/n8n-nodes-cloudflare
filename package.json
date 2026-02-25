@@ -64,6 +64,7 @@
 		"dev:windows": "node scripts/setup-dev-windows.js && tsc --watch",
 		"dev:n8n": "node scripts/watch-n8n.js",
 		"start:dev": "node scripts/start-dev.mjs",
+		"issue:investigate": "node .codex/skills/n8n-nodes-cloudflare-dev/scripts/investigate-github-issue.mjs",
 		"format": "prettier nodes credentials --write",
 		"lint": "eslint nodes credentials package.json",
 		"lintfix": "eslint nodes credentials package.json --fix",
