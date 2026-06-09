@@ -6,6 +6,7 @@ import {
 import {
 	cloudflareApiRequest,
 	cloudflareApiRequestAllItems,
+	cloudflareApiRequestDownload,
 	cloudflareApiRequestRaw,
 } from '../shared/GenericFunctions';
 
@@ -58,12 +59,47 @@ export async function r2ObjectExecute(
 
 	if (operation === 'get') {
 		const objectKey = this.getNodeParameter('objectKey', itemIndex) as string;
+		const responseFormat = this.getNodeParameter('responseFormat', itemIndex, 'text') as string;
 
-		responseData = await cloudflareApiRequest.call(
+		const { body, contentType } = await cloudflareApiRequestDownload.call(
 			this,
 			'GET',
 			`/accounts/${accountId}/r2/buckets/${bucketName}/objects/${encodeURIComponent(objectKey)}`,
+			{},
+			itemIndex,
 		);
+
+		if (responseFormat === 'binary') {
+			const binaryPropertyName = this.getNodeParameter('binaryPropertyName', itemIndex, 'data') as string;
+
+			const binaryData = await this.helpers.prepareBinaryData(body, objectKey, contentType);
+
+			return [
+				{
+					json: {
+						success: true,
+						key: objectKey,
+						contentType: contentType ?? binaryData.mimeType,
+						size: body.length,
+					},
+					binary: { [binaryPropertyName]: binaryData },
+					pairedItem: { item: itemIndex },
+				},
+			];
+		}
+
+		return [
+			{
+				json: {
+					success: true,
+					key: objectKey,
+					content: body.toString('utf-8'),
+					contentType: contentType ?? 'text/plain',
+					size: body.length,
+				},
+				pairedItem: { item: itemIndex },
+			},
+		];
 	}
 
 	if (operation === 'delete') {

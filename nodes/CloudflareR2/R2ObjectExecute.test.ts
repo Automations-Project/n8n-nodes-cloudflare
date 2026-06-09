@@ -3,18 +3,23 @@ import { r2ObjectExecute } from './R2ObjectExecute';
 import {
 	cloudflareApiRequest,
 	cloudflareApiRequestAllItems,
+	cloudflareApiRequestDownload,
 	cloudflareApiRequestRaw,
 } from '../shared/GenericFunctions';
 
 jest.mock('../shared/GenericFunctions', () => ({
 	cloudflareApiRequest: jest.fn(),
 	cloudflareApiRequestAllItems: jest.fn(),
+	cloudflareApiRequestDownload: jest.fn(),
 	cloudflareApiRequestRaw: jest.fn(),
 }));
 
 const mockCloudflareApiRequest = cloudflareApiRequest as jest.MockedFunction<typeof cloudflareApiRequest>;
 const mockCloudflareApiRequestAllItems = cloudflareApiRequestAllItems as jest.MockedFunction<
 	typeof cloudflareApiRequestAllItems
+>;
+const mockCloudflareApiRequestDownload = cloudflareApiRequestDownload as jest.MockedFunction<
+	typeof cloudflareApiRequestDownload
 >;
 const mockCloudflareApiRequestRaw = cloudflareApiRequestRaw as jest.MockedFunction<
 	typeof cloudflareApiRequestRaw
@@ -30,6 +35,11 @@ function createExecuteContext(
 		helpers: {
 			getBinaryDataBuffer: jest.fn(async () => binaryBuffer),
 			assertBinaryData: jest.fn(() => binaryData),
+			prepareBinaryData: jest.fn(async (data: Buffer, fileName: string, mimeType?: string) => ({
+				data: data.toString('base64'),
+				fileName,
+				mimeType: mimeType ?? 'application/octet-stream',
+			})),
 		},
 	} as unknown as IExecuteFunctions;
 }
@@ -185,6 +195,92 @@ describe('r2ObjectExecute upload', () => {
 		expect(result).toEqual([
 			{
 				json: { success: true, key: 'empty-response.txt' },
+				pairedItem: { item: 0 },
+			},
+		]);
+	});
+});
+
+describe('r2ObjectExecute get (download)', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it('downloads object content and returns it as text by default', async () => {
+		mockCloudflareApiRequestDownload.mockResolvedValueOnce({
+			body: Buffer.from('# Hello\nWorld', 'utf-8'),
+			contentType: 'text/markdown',
+		});
+
+		const context = createExecuteContext({
+			operation: 'get',
+			accountId: 'acc123',
+			bucketName: 'my-bucket',
+			objectKey: 'docs/readme.md',
+			responseFormat: 'text',
+		});
+
+		const result = await r2ObjectExecute.call(context, 0);
+
+		expect(mockCloudflareApiRequestDownload).toHaveBeenCalledWith(
+			'GET',
+			'/accounts/acc123/r2/buckets/my-bucket/objects/docs%2Freadme.md',
+			{},
+			0,
+		);
+		expect(mockCloudflareApiRequest).not.toHaveBeenCalled();
+		expect(result).toEqual([
+			{
+				json: {
+					success: true,
+					key: 'docs/readme.md',
+					content: '# Hello\nWorld',
+					contentType: 'text/markdown',
+					size: Buffer.from('# Hello\nWorld', 'utf-8').length,
+				},
+				pairedItem: { item: 0 },
+			},
+		]);
+	});
+
+	it('returns object content as a binary property when requested', async () => {
+		const fileBytes = Buffer.from([0, 1, 2, 3, 4]);
+		mockCloudflareApiRequestDownload.mockResolvedValueOnce({
+			body: fileBytes,
+			contentType: 'application/octet-stream',
+		});
+
+		const context = createExecuteContext({
+			operation: 'get',
+			accountId: 'acc123',
+			bucketName: 'my-bucket',
+			objectKey: 'data/blob.bin',
+			responseFormat: 'binary',
+			binaryPropertyName: 'data',
+		});
+
+		const result = await r2ObjectExecute.call(context, 0);
+
+		expect(context.helpers.prepareBinaryData).toHaveBeenCalledWith(
+			fileBytes,
+			'data/blob.bin',
+			'application/octet-stream',
+		);
+		expect(result).toEqual([
+			{
+				json: {
+					success: true,
+					key: 'data/blob.bin',
+					contentType: 'application/octet-stream',
+					size: fileBytes.length,
+				},
+				binary: {
+					data: {
+						data: fileBytes.toString('base64'),
+						fileName: 'data/blob.bin',
+						mimeType: 'application/octet-stream',
+					},
+				},
 				pairedItem: { item: 0 },
 			},
 		]);

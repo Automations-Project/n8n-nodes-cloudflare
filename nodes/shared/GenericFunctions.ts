@@ -391,6 +391,100 @@ export async function cloudflareApiRequestRaw(
 }
 
 /**
+ * Download a raw/binary object from Cloudflare (e.g. R2 object content).
+ *
+ * Unlike `cloudflareApiRequest` (which expects a JSON `{ success, result }`
+ * envelope) this returns the raw bytes together with the response
+ * `Content-Type` so the caller can surface the data as text or as an n8n
+ * binary property. Used by the R2 object "Get" (download) operation.
+ */
+export async function cloudflareApiRequestDownload(
+	this: IExecuteFunctions,
+	method: IHttpRequestMethods,
+	endpoint: string,
+	qs: IDataObject = {},
+	itemIndex?: number,
+): Promise<{ body: Buffer; contentType?: string }> {
+	const options: IHttpRequestOptions = {
+		method,
+		url: `https://api.cloudflare.com/client/v4${endpoint}`,
+		encoding: 'arraybuffer',
+		returnFullResponse: true,
+		json: false,
+	};
+
+	if (Object.keys(qs).length > 0) {
+		options.qs = qs;
+	}
+
+	try {
+		const response = (await this.helpers.httpRequestWithAuthentication.call(
+			this,
+			'cloudflareApi',
+			options,
+		)) as { body?: unknown; headers?: IDataObject };
+
+		const rawBody = response.body;
+		let body: Buffer;
+		if (Buffer.isBuffer(rawBody)) {
+			body = rawBody;
+		} else if (rawBody instanceof ArrayBuffer) {
+			body = Buffer.from(new Uint8Array(rawBody));
+		} else if (rawBody instanceof Uint8Array) {
+			body = Buffer.from(rawBody);
+		} else if (typeof rawBody === 'string') {
+			body = Buffer.from(rawBody, 'utf-8');
+		} else {
+			body = Buffer.alloc(0);
+		}
+
+		const headers = (response.headers ?? {}) as IDataObject;
+		const contentType = headers['content-type'] as string | undefined;
+
+		return { body, contentType };
+	} catch (error) {
+		const err = error as {
+			statusCode?: number;
+			message?: string;
+			httpCode?: string;
+			response?: { body?: unknown };
+		};
+
+		// Cloudflare returns a JSON error envelope even for download endpoints.
+		let cfErrors: Array<{ message?: string; code?: number }> | undefined;
+		const errorBody = err.response?.body;
+		if (errorBody) {
+			let parsed: { errors?: Array<{ message?: string; code?: number }> } | undefined;
+			if (Buffer.isBuffer(errorBody)) {
+				try {
+					parsed = JSON.parse(errorBody.toString('utf-8'));
+				} catch {
+					// Ignore non-JSON error bodies
+				}
+			} else if (typeof errorBody === 'string') {
+				try {
+					parsed = JSON.parse(errorBody);
+				} catch {
+					// Ignore non-JSON error bodies
+				}
+			} else if (typeof errorBody === 'object') {
+				parsed = errorBody as { errors?: Array<{ message?: string; code?: number }> };
+			}
+			cfErrors = parsed?.errors;
+		}
+
+		const cfErrorMessage = cfErrors?.[0]?.message;
+		const httpCode = err.httpCode || (err.statusCode ? String(err.statusCode) : undefined);
+
+		throw new NodeApiError(this.getNode(), error as JsonObject, {
+			message: cfErrorMessage || err.message || 'Cloudflare object download failed',
+			httpCode,
+			itemIndex,
+		});
+	}
+}
+
+/**
  * Make an API request to Cloudflare with NDJSON body format
  * Used for Vectorize insert/upsert operations that require application/x-ndjson
  * Cloudflare expects multipart form-data with a 'body' field containing the NDJSON

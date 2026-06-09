@@ -22,7 +22,7 @@ export const r2ObjectOperations: INodeProperties[] = [
 			{
 				name: 'Get',
 				value: 'get',
-				description: 'Get object metadata',
+				description: "Download an object's content from a bucket",
 				action: 'Get an object',
 			},
 			{
@@ -91,6 +91,51 @@ export const r2ObjectFields: INodeProperties[] = [
 			show: {
 				resource: ['object'],
 				operation: ['get', 'delete', 'upload'],
+			},
+		},
+	},
+
+	// ===========================================
+	//         Get (download) fields
+	// ===========================================
+	{
+		displayName: 'Output Format',
+		name: 'responseFormat',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['object'],
+				operation: ['get'],
+			},
+		},
+		options: [
+			{
+				name: 'Text',
+				value: 'text',
+				description: 'Return the object content as text inside the JSON output',
+			},
+			{
+				name: 'Binary File',
+				value: 'binary',
+				description: 'Return the object content as a downloadable binary property',
+			},
+		],
+		default: 'text',
+		description: 'How to return the downloaded object content',
+	},
+	{
+		displayName: 'Put Output In Field',
+		name: 'binaryPropertyName',
+		type: 'string',
+		required: true,
+		default: 'data',
+		placeholder: 'data',
+		description: 'Name of the binary property to write the downloaded file to',
+		displayOptions: {
+			show: {
+				resource: ['object'],
+				operation: ['get'],
+				responseFormat: ['binary'],
 			},
 		},
 	},
